@@ -1,0 +1,6 @@
+<FilesMatch "\.(php|php5|phtml|pl|py|jsp|asp|aspx|sh|bash|cgi)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+Options -Indexes

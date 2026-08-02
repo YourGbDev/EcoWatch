@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Flood & Waste Monitoring Platform</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons for Modern UI -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1E40AF',
+                            green: '#10B981',
+                            dark: '#0F172A',
+                            light: '#F8FAFC'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-nav {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        /* Smooth scale animation for popups */
+        .modal-animate {
+            transition: all 0.3s ease-out;
+            transform: scale(0.95);
+            opacity: 0;
+        }
+        .modal-active .modal-animate {
+            transform: scale(1);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-brand-light text-brand-dark font-sans antialiased relative">
+
+    <!-- ========================================== -->
+    <!-- 1. NAVIGATION BAR                          -->
+    <!-- ========================================== -->
+    <header class="fixed top-0 w-full z-40 glass-nav border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo Container -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="bg-brand-blue text-white p-2.5 rounded-xl shadow-md group-hover:bg-blue-700 transition">
+                    <i data-lucide="shield-alert" class="w-6 h-6"></i>
+                </div>
+                <span class="font-bold text-xl tracking-tight bg-gradient-to-r from-brand-blue to-blue-700 bg-clip-text text-transparent">EcoWatch</span>
+            </a>
+
+            <!-- Desktop Links -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-slate-600">
+                <a href="#" class="text-brand-blue transition">Home</a>
+                <a href="#problems" class="hover:text-brand-blue transition">About</a>
+                <a href="#features" class="hover:text-brand-blue transition">Features</a>
+                <a href="#how-it-works" class="hover:text-brand-blue transition">How It Works</a>
+                <a href="#footer" class="hover:text-brand-blue transition">Contact</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4">
+    <button id="loginNavBtn" onclick="openModal('login-modal')" class="px-5 py-2.5 text-slate-700 font-medium hover:text-brand-blue transition">
+        Login
+    </button>
+    <button id="registerNavBtn" onclick="openModal('register-modal')" class="bg-brand-blue text-white px-5 py-2.5 rounded-xl shadow-md hover:bg-blue-700 transition">
+        Register
+    </button>
+</div>
+
+            <!-- Mobile Hamburger Button -->
+            <button class="md:hidden p-2 text-slate-600 hover:text-brand-blue focus:outline-none" onclick="toggleMobileMenu()">
+                <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Dynamic Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-slate-200 bg-white px-4 pt-2 pb-6 space-y-3 shadow-lg">
+            <a href="#" onclick="toggleMobileMenu()" class="block py-2 text-brand-blue font-medium">Home</a>
+            <a href="#problems" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 font-medium">About</a>
+            <a href="#features" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 font-medium">Features</a>
+            <a href="#how-it-works" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 font-medium">How It Works</a>
+            <div class="pt-4 border-t border-slate-100 flex flex-col space-y-3">
+                <!-- Line 91: Updated Mobile Login Button -->
+    <button id="loginMobileBtn" onclick="openModal('login-modal')" class="w-full py-2.5 text-center text-slate-700 font-medium hover:text-brand-blue transition">
+        Login
+    </button>
+    
+    <!-- Line 92: Updated Mobile Register Button -->
+    <button id="registerMobileBtn" onclick="openModal('register-modal')" class="w-full bg-brand-blue text-white py-2.5 rounded-xl shadow-md hover:bg-blue-700 transition text-center font-medium">
+        Register
+    </button>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- ========================================== -->
+        <!-- 2. HERO SECTION                            -->
+        <!-- ========================================== -->
+        <section class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-28 grid md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-7 space-y-6 text-center md:text-left">
+                <div class="inline-flex items-center space-x-2 bg-blue-50 text-brand-blue px-4 py-2 rounded-full text-sm font-semibold tracking-wide uppercase">
+                    <span class="flex h-2 w-2 rounded-full bg-brand-blue animate-pulse"></span>
+                    <span>Live Civil Defense Portal</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-dark tracking-tight leading-tight">
+                    Smart Flood & Waste <br class="hidden lg:inline"><span class="text-brand-blue">Monitoring Platform</span>
+                </h1>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto md:mx-0 leading-relaxed">
+                    Flag instances of localized flooding, illegal dumping, and choked municipal culverts directly to system administrators for real-time priority intervention.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 pt-2">
+                    <button onclick="openModal('report-modal')" class="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-brand-blue text-white px-8 py-4 rounded-xl font-semibold shadow-lg shadow-blue-600/20 hover:bg-blue-700 hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
+                        <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                        <span>Report an Issue</span>
+                    </button>
+                    <button onclick="openModal('track-modal')" class="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-xl font-semibold shadow-sm hover:bg-slate-50 transition">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                        <span>Track Report</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Interactive Visual Asset Block -->
+            <div class="md:col-span-5 relative flex justify-center">
+                <div class="w-full max-w-md aspect-square bg-gradient-to-tr from-blue-100 to-emerald-50 rounded-3xl border border-slate-200 shadow-xl flex items-center justify-center p-8 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] opacity-60"></div>
+                    <div class="relative space-y-6 text-center z-10">
+                        <div class="bg-white p-6 rounded-2xl shadow-lg inline-block text-brand-blue mb-2 animate-bounce">
+                            <i data-lucide="activity" class="w-16 h-16"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-brand-dark">Active Monitoring Node</h4>
+                        <p class="text-sm text-slate-500">Telemetry modules listening for civic environment feedback loops across all city grids.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 3. PROBLEM AWARENESS SECTION               -->
+        <!-- ========================================== -->
+        <section id="problems" class="bg-white border-y border-slate-200/60 py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                    <h2 class="text-3xl font-bold tracking-tight text-brand-dark sm:text-4xl">Common Municipal Blockages</h2>
+                    <p class="text-lg text-slate-500">Unresolved infrastructure reports escalate rapidly into structural damage.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div onclick="openReportWithCategory('flooding')" class="bg-brand-light p-8 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-xl hover:border-brand-blue transition cursor-pointer group">
+                        <div class="bg-blue-100 text-brand-blue p-3 rounded-xl w-fit mb-6 group-hover:bg-brand-blue group-hover:text-white transition"><i data-lucide="droplet" class="w-6 h-6"></i></div>
+                        <h3 class="font-bold text-xl mb-3">Severe Flooding</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">Stagnant flash floods cutting off community roads and infrastructure points.</p>
+                        <span class="text-brand-blue text-xs font-bold inline-flex items-center space-x-1"><span>Report this</span> <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i></span>
+                    </div>
+                    <div onclick="openReportWithCategory('illegal_dumping')" class="bg-brand-light p-8 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-xl hover:border-red-500 transition cursor-pointer group">
+                        <div class="bg-red-100 text-red-600 p-3 rounded-xl w-fit mb-6 group-hover:bg-red-600 group-hover:text-white transition"><i data-lucide="trash-2" class="w-6 h-6"></i></div>
+                        <h3 class="font-bold text-xl mb-3">Illegal Dumping</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">Unregulated bulk waste pileups contaminating common utility lanes and public parks.</p>
+                        <span class="text-red-600 text-xs font-bold inline-flex items-center space-x-1"><span>Report this</span> <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i></span>
+                    </div>
+                    <div onclick="openReportWithCategory('clogged_drainage')" class="bg-brand-light p-8 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-xl hover:border-amber-500 transition cursor-pointer group">
+                        <div class="bg-amber-100 text-amber-600 p-3 rounded-xl w-fit mb-6 group-hover:bg-amber-500 group-hover:text-white transition"><i data-lucide="filter-x" class="w-6 h-6"></i></div>
+                        <h3 class="font-bold text-xl mb-3">Clogged Drainage</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">Debris and synthetic plastics strangling street level rain catchments.</p>
+                        <span class="text-amber-600 text-xs font-bold inline-flex items-center space-x-1"><span>Report this</span> <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i></span>
+                    </div>
+                    <div onclick="openReportWithCategory('uncollected_garbage')" class="bg-brand-light p-8 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-xl hover:border-brand-green transition cursor-pointer group">
+                        <div class="bg-emerald-100 text-brand-green p-3 rounded-xl w-fit mb-6 group-hover:bg-brand-green group-hover:text-white transition"><i data-lucide="truck" class="w-6 h-6"></i></div>
+                        <h3 class="font-bold text-xl mb-3">Uncollected Garbage</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">Missed city collection vectors leading to high-density structural overflows.</p>
+                        <span class="text-brand-green text-xs font-bold inline-flex items-center space-x-1"><span>Report this</span> <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 4. PLATFORM FEATURES SECTION               -->
+        <!-- ========================================== -->
+        <section id="features" class="py-20 bg-brand-light">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                    <h2 class="text-3xl font-bold tracking-tight text-brand-dark sm:text-4xl">System Features</h2>
+                    <p class="text-lg text-slate-500">Engineered with high performance capability to streamline environmental accountability.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 flex space-x-5 shadow-sm hover:shadow-md transition">
+                        <div class="bg-brand-blue text-white p-4 h-fit rounded-xl"><i data-lucide="user-check" class="w-6 h-6"></i></div>
+                        <div class="space-y-2">
+                            <h3 class="font-bold text-xl">User Authentication</h3>
+                            <p class="text-slate-600 text-sm">Protected secure portal gates splitting administrative tasks transparently away from general public inputs.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 flex space-x-5 shadow-sm hover:shadow-md transition">
+                        <div class="bg-brand-blue text-white p-4 h-fit rounded-xl"><i data-lucide="file-plus" class="w-6 h-6"></i></div>
+                        <div class="space-y-2">
+                            <h3 class="font-bold text-xl">Report Submission</h3>
+                            <p class="text-slate-600 text-sm">Upload localized files, coordinate parameters, and structural tags seamlessly within seconds.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 flex space-x-5 shadow-sm hover:shadow-md transition">
+                        <div class="bg-brand-blue text-white p-4 h-fit rounded-xl"><i data-lucide="map-pin" class="w-6 h-6"></i></div>
+                        <div class="space-y-2">
+                            <h3 class="font-bold text-xl">Report Tracking</h3>
+                            <p class="text-slate-600 text-sm">Verify processing benchmarks down to the minute via transparent system unique tokens.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 flex space-x-5 shadow-sm hover:shadow-md transition">
+                        <div class="bg-brand-blue text-white p-4 h-fit rounded-xl"><i data-lucide="layout-dashboard" class="w-6 h-6"></i></div>
+                        <div class="space-y-2">
+                            <h3 class="font-bold text-xl">Admin Dashboard</h3>
+                            <p class="text-slate-600 text-sm">Dynamic dashboard modules allowing municipality managers to route operations efficiently.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 5. HOW IT WORKS SECTION                    -->
+        <!-- ========================================== -->
+        <section id="how-it-works" class="bg-white border-y border-slate-200/60 py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto space-y-4 mb-20">
+                    <h2 class="text-3xl font-bold tracking-tight text-brand-dark sm:text-4xl">Incident Life Cycle</h2>
+                    <p class="text-lg text-slate-500">How data transitions smoothly into infrastructure solutions.</p>
+                </div>
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div class="text-center space-y-4 group">
+                        <div class="mx-auto w-16 h-16 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center font-bold text-xl shadow-inner group-hover:bg-brand-blue group-hover:text-white transition-all">1</div>
+                        <h3 class="font-bold text-lg">Citizen Submits</h3>
+                        <p class="text-slate-500 text-sm px-4">Upload the category, site images, and descriptions instantly.</p>
+                    </div>
+                    <div class="text-center space-y-4 group">
+                        <div class="mx-auto w-16 h-16 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center font-bold text-xl shadow-inner group-hover:bg-brand-blue group-hover:text-white transition-all">2</div>
+                        <h3 class="font-bold text-lg">Admin Reviews</h3>
+                        <p class="text-slate-500 text-sm px-4">Operations verify telemetry reports and signal field dispatch.</p>
+                    </div>
+                    <div class="text-center space-y-4 group">
+                        <div class="mx-auto w-16 h-16 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center font-bold text-xl shadow-inner group-hover:bg-brand-blue group-hover:text-white transition-all">3</div>
+                        <h3 class="font-bold text-lg">Status Updated</h3>
+                        <p class="text-slate-500 text-sm px-4">Public utility engineering fixes the threat and records confirmation.</p>
+                    </div>
+                    <div class="text-center space-y-4 group">
+                        <div class="mx-auto w-16 h-16 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center font-bold text-xl shadow-inner group-hover:bg-brand-blue group-hover:text-white transition-all">4</div>
+                        <h3 class="font-bold text-lg">Track Progress</h3>
+                        <p class="text-slate-500 text-sm px-4">Transparency verified on the public front-end dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 6. STATISTICS PREVIEW SECTION              -->
+        <!-- ========================================== -->
+        <section class="py-20 bg-brand-light">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white border border-slate-200 p-8 rounded-2xl text-center shadow-sm hover:shadow-md transition">
+                        <p class="text-4xl lg:text-5xl font-extrabold text-brand-blue mb-2">12,480</p>
+                        <p class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Reports Submitted</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 p-8 rounded-2xl text-center shadow-sm hover:shadow-md transition">
+                        <p class="text-4xl lg:text-5xl font-extrabold text-brand-green mb-2">11,850</p>
+                        <p class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Reports Resolved</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 p-8 rounded-2xl text-center shadow-sm hover:shadow-md transition">
+                        <p class="text-4xl lg:text-5xl font-extrabold text-amber-500 mb-2">630</p>
+                        <p class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Active Cases</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 p-8 rounded-2xl text-center shadow-sm hover:shadow-md transition">
+                        <p class="text-4xl lg:text-5xl font-extrabold text-brand-dark mb-2">45,200</p>
+                        <p class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Registered Citizens</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 7. FUTURE FEATURES ROADMAP                 -->
+        <!-- ========================================== -->
+        <section class="bg-slate-900 text-white py-20 relative overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:24px_24px] opacity-40"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                    <span class="bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase">Future Implementations</span>
+                    <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">System Expansion Matrix</h2>
+                    <p class="text-lg text-slate-400">Advanced analytical capabilities locked for future system releases.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-slate-800/60 border border-slate-700/50 p-6 rounded-2xl backdrop-blur hover:border-slate-500 transition">
+                        <div class="text-blue-400 mb-4"><i data-lucide="map" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-lg mb-2">Interactive Maps</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">Spatial mapping overlays detailing public node configurations live.</p>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700/50 p-6 rounded-2xl backdrop-blur hover:border-slate-500 transition">
+                        <div class="text-red-400 mb-4"><i data-lucide="flame" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-lg mb-2">Heatmaps</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">Dynamic vector cluster visualization highlighting chronic structural breakdowns.</p>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700/50 p-6 rounded-2xl backdrop-blur hover:border-slate-500 transition">
+                        <div class="text-emerald-400 mb-4"><i data-lucide="bar-chart-3" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-lg mb-2">Analytics Dashboard</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">Predictive risk evaluation models using automated local weather feeds.</p>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700/50 p-6 rounded-2xl backdrop-blur hover:border-slate-500 transition">
+                        <div class="text-amber-400 mb-4"><i data-lucide="bell-ring" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-lg mb-2">Email Notifications</h4>
+                        <p class="text-slate-400 text-xs leading-relaxed">Automated telemetry alerts letting reporters trace resolutions remotely.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 8. FINAL CALL TO ACTION                    -->
+        <!-- ========================================== -->
+        <section class="bg-white py-20">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center bg-gradient-to-br from-brand-blue to-blue-800 rounded-3xl p-12 md:p-16 shadow-xl text-white relative overflow-hidden">
+                <div class="relative z-10 space-y-6 max-w-2xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Ready to Protect Your Neighborhood?</h2>
+                    <p class="text-blue-100 text-base md:text-lg">Deploy system tickets inside our staging environment instantly to watch response mechanisms operate.</p>
+                    <div class="pt-4">
+                        <button onclick="openModal('report-modal')" class="bg-brand-green text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-emerald-900/30 hover:bg-emerald-600 hover:shadow-xl transition-all w-full sm:w-auto">
+                            Get Started Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========================================== -->
+    <!-- 9. FOOTER                                  -->
+    <!-- ========================================== -->
+    <footer id="footer" class="bg-slate-50 border-t border-slate-200 text-slate-600 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-10">
+            <div class="col-span-2 md:col-span-1 space-y-4">
+                <div class="flex items-center space-x-2 text-brand-blue font-bold text-lg">
+                    <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                    <span>EcoWatch</span>
+                </div>
+                <p class="text-sm text-slate-500 leading-relaxed">High fidelity environmental issue tracing systems making modern public operations thoroughly data-driven.</p>
+            </div>
+            <div>
+                <h5 class="font-bold text-slate-900 mb-4 text-sm uppercase tracking-wider">Quick Links</h5>
+                <ul class="space-y-2.5 text-sm">
+                    <li><button onclick="openModal('report-modal')" class="hover:text-brand-blue transition">Submit Report</button></li>
+                    <li><button onclick="openModal('track-modal')" class="hover:text-brand-blue transition">Track Incidents</button></li>
+                    <li><a href="#" class="hover:text-brand-blue transition">Open Data Node</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-bold text-slate-900 mb-4 text-sm uppercase tracking-wider">Contact Systems</h5>
+                <ul class="space-y-2.5 text-sm text-slate-500">
+                    <li class="flex items-center space-x-2"><i data-lucide="mail" class="w-4 h-4"></i><span>support@ecowatch.gov</span></li>
+                    <li class="flex items-center space-x-2"><i data-lucide="phone" class="w-4 h-4"></i><span>1-800-555-0199</span></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-bold text-slate-900 mb-4 text-sm uppercase tracking-wider">Connect</h5>
+                <div class="flex space-x-4 text-slate-400">
+                    <a href="#" class="hover:text-brand-blue transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-brand-blue transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-400">
+            &copy; Developed By: Gilbert Maala Bulado Jr.
+        </div>
+    </footer>
+
+
+    <!-- ========================================== -->
+    <!-- INTERACTIVE MODAL COMPONENT WINDOWS        -->
+    <!-- ========================================== -->
+
+    <!-- REPORT SUBMISSION MODAL -->
+    <div id="report-modal" class="fixed inset-0 z-50 flex items-center justify-center invisible transition-all duration-300">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('report-modal')"></div>
+        <div class="bg-white rounded-2xl w-full max-w-xl p-6 md:p-8 shadow-2xl relative z-10 mx-4 modal-animate max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('report-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h3 class="text-2xl font-bold text-brand-dark mb-2">Submit New Environmental Incident</h3>
+            <p class="text-slate-500 text-sm mb-6">Provide location accurate metrics below to submit verification to civil response units.</p>
+            
+            <form id="incident-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <input type="hidden" name="csrf_token" id="csrf-token" value="">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Issue Category *</label>
+                    <select id="form-category" name="category" required class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                        <option value="">Select infrastructure fault...</option>
+                        <option value="flooding">Severe Flooding</option>
+                        <option value="illegal_dumping">Illegal Waste Dumping</option>
+                        <option value="clogged_drainage">Clogged Drainage System</option>
+                        <option value="uncollected_garbage">Uncollected Public Garbage</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Barangay *</label>
+                    <select id="form-barangay" name="barangay" required class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                        <option value="">Select Barangay</option>
+                        <option value="Barangay 1">Barangay 1</option>
+                        <option value="Barangay 2">Barangay 2</option>
+                        <option value="Barangay 3">Barangay 3</option>
+                        <option value="Barangay 4">Barangay 4</option>
+                        <option value="Barangay 5">Barangay 5</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Severity Designation *</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <label class="border border-slate-200 rounded-xl p-3 flex items-center justify-center space-x-2 text-sm font-medium cursor-pointer hover:bg-slate-50"><input type="radio" name="severity" value="low" checked class="text-brand-blue"> <span>Low</span></label>
+                        <label class="border border-slate-200 rounded-xl p-3 flex items-center justify-center space-x-2 text-sm font-medium cursor-pointer hover:bg-slate-50"><input type="radio" name="severity" value="high" class="text-brand-blue"> <span>High</span></label>
+                        <label class="border border-slate-200 rounded-xl p-3 flex items-center justify-center space-x-2 text-sm font-medium cursor-pointer hover:bg-slate-50"><input type="radio" name="severity" value="critical" class="text-brand-blue"><span class="text-red-600">Critical</span></label>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Site Location Context *</label>
+                    <input type="text" name="address" required placeholder="e.g. Corner of 4th Ave and Maple St" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Description & Field Evidence</label>
+                    <textarea name="description" rows="3" placeholder="Provide extra descriptive markers to speed up identification..." class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Photo Evidence</label>
+                    <div class="relative border-2 border-dashed border-slate-200 rounded-xl p-6 text-center hover:border-brand-blue transition cursor-pointer" onclick="document.getElementById('report-photo').click()">
+                        <input type="file" id="report-photo" accept="image/jpeg,image/png,image/webp" class="hidden" onchange="previewPhoto(this)">
+                        <div id="photo-preview-placeholder" class="space-y-2">
+                            <i data-lucide="camera" class="w-8 h-8 text-slate-400 mx-auto"></i>
+                            <p class="text-sm text-slate-500">Click to upload photo evidence</p>
+                            <p class="text-xs text-slate-400">JPEG, PNG, WebP up to 5MB</p>
+                        </div>
+                        <img id="photo-preview-img" class="hidden max-h-48 mx-auto rounded-lg shadow-md" alt="Preview">
+                        <button type="button" id="photo-remove-btn" class="hidden absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 shadow" onclick="removePhotoPreview()">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="pt-2 flex space-x-4" id="form-actions">
+                    <button type="button" onclick="closeModal('report-modal')" class="w-1/2 border border-slate-200 text-slate-700 py-3 rounded-xl font-semibold hover:bg-slate-50 transition">Cancel</button>
+                    <button type="submit" class="w-1/2 bg-brand-blue text-white py-3 rounded-xl font-semibold hover:bg-blue-700 shadow-md transition">Dispatch Log</button>
+                </div>
+
+                <div id="submit-success" class="hidden text-center py-8 space-y-4">
+                    <div class="mx-auto w-16 h-16 bg-brand-green/10 text-brand-green rounded-full flex items-center justify-center">
+                        <i data-lucide="check" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-dark">Report Submitted</h4>
+                    <p class="text-slate-500 text-sm">Save your tracking token to monitor progress:</p>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 inline-flex items-center space-x-2">
+                        <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Token</span>
+                        <span id="success-token" class="text-lg font-mono font-bold text-brand-blue">--</span>
+                    </div>
+                    <div class="pt-4 flex space-x-4">
+                        <button type="button" onclick="openModal('track-modal')" class="w-1/2 border border-slate-200 text-slate-700 py-3 rounded-xl font-semibold hover:bg-slate-50 transition inline-flex items-center justify-center space-x-2">
+                            <i data-lucide="search" class="w-4 h-4"></i> <span>Track</span>
+                        </button>
+                        <button type="button" onclick="resetSubmission()" class="w-1/2 bg-brand-blue text-white py-3 rounded-xl font-semibold hover:bg-blue-700 shadow-md transition">Submit Another</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- REPORT TRACKING WINDOW -->
+    <div id="track-modal" class="fixed inset-0 z-50 flex items-center justify-center invisible transition-all duration-300">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('track-modal')"></div>
+        <div class="bg-white rounded-2xl w-full max-w-md p-6 md:p-8 shadow-2xl relative z-10 mx-4 modal-animate">
+            <button onclick="closeModal('track-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h3 class="text-2xl font-bold text-brand-dark mb-2">Track System Token</h3>
+            <p class="text-slate-500 text-sm mb-6">Enter your 8-digit tracking identifier reference below.</p>
+            
+            <div class="space-y-4">
+                <div class="relative">
+                    <input type="text" id="track-input" placeholder="e.g. EW-884291" class="w-full border border-slate-200 rounded-xl pl-12 pr-4 py-3 bg-slate-50 font-mono text-lg uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                    <div class="absolute left-4 top-3.5 text-slate-400"><i data-lucide="ticket" class="w-5 h-5"></i></div>
+                </div>
+                <button onclick="handleTrackingRequest()" class="w-full bg-brand-blue text-white py-3 rounded-xl font-semibold hover:bg-blue-700 shadow-md transition">Query Database</button>
+                
+                <!-- Result Timeline -->
+                <div id="track-result" class="hidden border border-slate-100 bg-slate-50 p-4 rounded-xl space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-slate-400 font-mono" id="result-id">#EW-884291</span>
+                        <span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-full font-bold uppercase tracking-wider" id="result-status">Submitted</span>
+                    </div>
+                    <p class="text-sm font-bold text-brand-dark" id="result-title">Clogged Drainage Grid</p>
+                    <p class="text-xs text-slate-500 mb-2" id="result-location">Location: Corner of 4th Ave</p>
+                    <p class="text-xs text-slate-500 mb-2" id="result-barangay">Barangay: Barangay 1</p>
+                    <div id="result-timeline" class="space-y-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 z-50 flex items-center justify-center invisible transition-all duration-300">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('login-modal')"></div>
+        <div class="bg-white rounded-2xl w-full max-w-md p-6 md:p-8 shadow-2xl relative z-10 mx-4 modal-animate max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('login-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h3 class="text-2xl font-bold text-brand-dark mb-2">Login to EcoWatch</h3>
+            <p class="text-slate-500 text-sm mb-6">Access your dashboard to report or monitor issues.</p>
+            <form id="login-form" class="space-y-4" onsubmit="handleLogin(event)">
+                <input type="hidden" name="csrf_token" id="login-csrf-token" value="">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Email Address</label>
+                    <input type="email" name="email" placeholder="name@example.com" required class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Password</label>
+                    <input type="password" name="password" placeholder="••••••••" required class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+                <button type="submit" class="w-full bg-brand-blue text-white py-3 rounded-xl font-semibold hover:bg-blue-700 shadow-md transition">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- REGISTER MODAL -->
+    <div id="register-modal" class="fixed inset-0 z-50 flex items-center justify-center invisible transition-all duration-300">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('register-modal')"></div>
+        <div class="bg-white rounded-2xl w-full max-w-md p-6 md:p-8 shadow-2xl relative z-10 mx-4 modal-animate max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('register-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h3 class="text-2xl font-bold text-brand-dark mb-2">Create Account</h3>
+            <p class="text-slate-500 text-sm mb-6">Join EcoWatch to submit and track environmental incidents.</p>
+            <form id="register-form" class="space-y-4" onsubmit="handleRegister(event)">
+                <input type="hidden" name="csrf_token" id="register-csrf-token" value="">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Full Name</label>
+                    <input type="text" name="name" placeholder="Enter your full name" required class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Email Address</label>
+                    <input type="email" name="email" placeholder="name@example.com" required class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Password</label>
+                    <input type="password" id="reg_password" name="password" placeholder="Minimum 8 characters" required minlength="8" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Confirm Password</label>
+                    <input type="password" id="confirm_password" placeholder="Re-enter password" required minlength="8" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+                <button type="submit" class="w-full bg-brand-green text-white py-3 rounded-xl font-semibold hover:bg-emerald-700 shadow-md transition">Register Account</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- INTERACTIVE SCRIPT LOGIC ENGINE -->
+    <script>
+        // Initialize Vector Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggling Action
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            const isHidden = menu.classList.toggle('hidden');
+            icon.setAttribute('data-lucide', isHidden ? 'menu' : 'x');
+            lucide.createIcons();
+        }
+
+        // Generic Modular Window Handlers
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('invisible');
+            modal.classList.add('modal-active', 'flex');
+            document.body.classList.add('overflow-hidden'); // Prevent background scroll
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('modal-active');
+            setTimeout(() => {
+                modal.classList.add('invisible');
+                document.body.classList.remove('overflow-hidden');
+            }, 150);
+            
+            // Clean dynamic result windows if closure happens on tracking
+            if(modalId === 'track-modal') {
+                document.getElementById('track-result').classList.add('hidden');
+                document.getElementById('track-input').value = '';
+            }
+        }
+
+        // Load CSRF token on page load
+        async function loadCsrfToken() {
+            try {
+                const response = await fetch('api/csrf_token.php');
+                const data = await response.json();
+                const token = data.csrf_token || '';
+                const reportInput = document.getElementById('csrf-token');
+                const loginInput = document.getElementById('login-csrf-token');
+                const registerInput = document.getElementById('register-csrf-token');
+                if (reportInput) reportInput.value = token;
+                if (loginInput) loginInput.value = token;
+                if (registerInput) registerInput.value = token;
+            } catch (error) {
+                console.error('Failed to load CSRF token:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCsrfToken();
+            lucide.createIcons();
+        });
+
+        // Context Triggered Submissions (From Problem cards)
+        function openReportWithCategory(categoryName) {
+            document.getElementById('form-category').value = categoryName;
+            openModal('report-modal');
+        }
+
+        // Submission handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const formElement = event.target;
+            const formData = new FormData(formElement);
+
+            const photoFileInput = document.getElementById('report-photo');
+            if (photoFileInput && photoFileInput.files.length > 0) {
+                formData.append('photo', photoFileInput.files[0]);
+            }
+
+            const submitBtn = formElement.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Submitting...';
+
+            fetch('api/submit_report.action.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
+
+                if (data.success && data.tracking_token) {
+                    showSubmissionSuccess(data.tracking_token);
+                } else {
+                    alert(data.message || 'Submission failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
+                console.error('Submission error:', error);
+                alert('Connection failed. Please try again.');
+            });
+        }
+
+        function previewPhoto(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const previewImg = document.getElementById('photo-preview-img');
+            const placeholder = document.getElementById('photo-preview-placeholder');
+            const removeBtn = document.getElementById('photo-remove-btn');
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                previewImg.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+                removeBtn.classList.remove('hidden');
+                removeBtn.classList.add('flex');
+                lucide.createIcons();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removePhotoPreview() {
+            const input = document.getElementById('report-photo');
+            const previewImg = document.getElementById('photo-preview-img');
+            const placeholder = document.getElementById('photo-preview-placeholder');
+            const removeBtn = document.getElementById('photo-remove-btn');
+
+            input.value = '';
+            previewImg.src = '';
+            previewImg.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+            removeBtn.classList.add('hidden');
+            removeBtn.classList.remove('flex');
+        }
+
+        function showSubmissionSuccess(token) {
+            document.getElementById('form-actions').classList.add('hidden');
+            document.querySelectorAll('#incident-form > div:not(#submit-success):not(#form-actions)').forEach(el => el.classList.add('hidden'));
+
+            const successDiv = document.getElementById('submit-success');
+            document.getElementById('success-token').innerText = token;
+            successDiv.classList.remove('hidden');
+
+            lucide.createIcons();
+        }
+
+        function resetSubmission() {
+            document.getElementById('incident-form').reset();
+            document.getElementById('form-actions').classList.remove('hidden');
+            document.getElementById('submit-success').classList.add('hidden');
+
+            document.querySelectorAll('#incident-form > div:not(#submit-success):not(#form-actions)').forEach(el => el.classList.remove('hidden'));
+        }
+        
+        function handleTrackingRequest() {
+            const inputVal = document.getElementById('track-input').value.trim();
+            if(!inputVal) {
+                alert('Please type a valid tracking reference identifier.');
+                return;
+            }
+            
+            const resultBox = document.getElementById('track-result');
+            const resId = document.getElementById('result-id');
+            const resTitle = document.getElementById('result-title');
+            const resLocation = document.getElementById('result-location');
+            const resBarangay = document.getElementById('result-barangay');
+            const resStatus = document.getElementById('result-status');
+            const resTimeline = document.getElementById('result-timeline');
+
+            fetch(`api/track_report.php?token=${encodeURIComponent(inputVal)}`)
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    const report = data.report;
+                    const history = data.status_history || [];
+                    
+                    resId.innerText = `#${report.tracking_token}`;
+                    resTitle.innerText = report.category.replace('_', ' ').toUpperCase();
+                    resLocation.innerText = `Location: ${report.address}`;
+                    resBarangay.innerText = `Barangay: ${report.barangay || 'N/A'}`;
+                    
+                    let statusColor = 'bg-blue-100 text-blue-700';
+                    if(report.status === 'verified') statusColor = 'bg-blue-100 text-blue-700';
+                    if(report.status === 'assigned') statusColor = 'bg-indigo-100 text-indigo-700';
+                    if(report.status === 'responding') statusColor = 'bg-purple-100 text-purple-700';
+                    if(report.status === 'resolved') statusColor = 'bg-emerald-100 text-emerald-700';
+                    
+                    resStatus.innerText = report.status.replace('_', ' ').toUpperCase();
+                    resStatus.className = `${statusColor} text-xs px-2.5 py-1 rounded-full font-bold uppercase tracking-wider`;
+
+                    resTimeline.innerHTML = history.map((entry, index) => {
+                        const date = new Date(entry.created_at).toLocaleDateString('en-US', { 
+                            month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' 
+                        });
+                        const isLast = index === history.length - 1;
+                        const statusLabel = entry.new_status.replace('_', ' ').toUpperCase();
+                        const dotColor = entry.new_status === 'resolved' ? 'bg-emerald-500' : 
+                                        entry.new_status === 'responding' ? 'bg-purple-500' :
+                                        entry.new_status === 'assigned' ? 'bg-indigo-500' :
+                                        entry.new_status === 'verified' ? 'bg-blue-500' : 'bg-amber-500';
+                        
+                        return `
+                            <div class="flex items-start space-x-3">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-3 h-3 rounded-full ${dotColor} ${isLast ? 'ring-4 ring-blue-100' : ''}"></div>
+                                    ${!isLast ? '<div class="w-0.5 h-6 bg-slate-200 mt-1"></div>' : ''}
+                                </div>
+                                <div class="flex-1 pb-2">
+                                    <p class="text-sm font-semibold text-slate-800">${statusLabel}</p>
+                                    <p class="text-xs text-slate-500">${date}</p>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    resultBox.classList.remove('hidden');
+                } else {
+                    alert(`Query Failed: ${data.message}`);
+                    resultBox.classList.add('hidden');
+                }
+            })
+            .catch(error => {
+                console.error('Tracking query execution link broken:', error);
+                alert('Could not establish connection to the backend server lookup logs.');
+            });
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.disabled = true;
+            btn.innerText = 'Signing In...';
+
+            try {
+                const response = await fetch('api/login_action.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (data.success && data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    alert(data.message || 'Login failed. Please try again.');
+                }
+            } catch (error) {
+                alert('Connection failed. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = originalText;
+            }
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            const form = event.target;
+            const password = form.querySelector('#reg_password').value;
+            const confirm = form.querySelector('#confirm_password').value;
+
+            if (password !== confirm) {
+                alert('Passwords do not match.');
+                return;
+            }
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters.');
+                return;
+            }
+
+            const formData = new FormData(form);
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.disabled = true;
+            btn.innerText = 'Creating Account...';
+
+            try {
+                const response = await fetch('api/register.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(data.message || 'Registration successful!');
+                    closeModal('register-modal');
+                    form.reset();
+                    openModal('login-modal');
+                } else {
+                    alert(data.message || 'Registration failed. Please try again.');
+                }
+            } catch (error) {
+                alert('Connection failed. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = originalText;
+            }
+        }
+</script>
+</body>
+</html>
