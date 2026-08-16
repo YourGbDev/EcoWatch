@@ -27,9 +27,9 @@ try {
         .nav-link.active { background: rgba(255, 255, 255, 0.15); color: #FFFFFF; }
     </style>
 </head>
-<body class="bg-gray-50 flex min-h-screen">
+<body class="bg-gray-50 min-h-screen">
 
-    <aside class="w-64 bg-[#3B49DF] p-8 text-white">
+    <aside class="w-64 bg-[#3B49DF] p-8 text-white fixed top-0 left-0 h-screen overflow-y-auto shadow-xl z-40">
         <div class="text-2xl font-bold mb-10 flex items-center gap-2">EcoWatch</div>
         <nav class="space-y-4">
             <a href="<?php echo BASE_URL; ?>/dashboard.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Dashboard</a>
@@ -43,7 +43,7 @@ try {
         </nav>
     </aside>
 
-    <main class="flex-1 p-8">
+    <main class="flex-1 ml-64 p-8">
         <h1 class="text-3xl font-bold mb-2">My Reports</h1>
         <p class="text-gray-500 mb-8">Track and manage all your submitted environmental incident reports.</p>
 
