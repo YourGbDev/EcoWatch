@@ -331,10 +331,6 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
         }
     }
 
-    // Close mobile menu when clicking overlay
-    document.getElementById('mobile-menu-overlay')?.addEventListener('click', toggleMobileMenu);
-    document.getElementById('close-mobile-menu')?.addEventListener('click', toggleMobileMenu);
-
     // Initialize mobile menu on page load
     document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
@@ -348,8 +344,6 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
 
     // Location Map Initialization
 
-    <!-- Location Map Initialization -->
-    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const mapContainer = document.getElementById('location-map');
             if (!mapContainer) return;
@@ -436,41 +430,6 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
                         }
                     }, 800);
                 });
-            }
-        });
-
-        // Mobile menu toggle functions
-        function toggleMobileMenu() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('mobile-menu-overlay');
-            const mobileBtn = document.getElementById('mobile-menu-btn');
-            const closeBtn = document.getElementById('close-mobile-menu');
-            
-            if (sidebar && sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.remove('-translate-x-full');
-                if (overlay) overlay.classList.remove('hidden');
-                if (mobileBtn) mobileBtn.classList.add('hidden');
-                if (closeBtn) closeBtn.classList.remove('hidden');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                if (overlay) overlay.classList.remove('hidden');
-                if (mobileBtn) mobileBtn.classList.remove('hidden');
-                if (closeBtn) closeBtn.classList.add('hidden');
-            }
-        }
-
-        // Close mobile menu when clicking overlay
-        document.getElementById('mobile-menu-overlay').addEventListener('click', toggleMobileMenu);
-        document.getElementById('close-mobile-menu').addEventListener('click', toggleMobileMenu);
-
-        // Initialize mobile menu on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            lucide.createIcons();
-            
-            // Mobile menu button
-            const mobileBtn = document.getElementById('mobile-menu-btn');
-            if (mobileBtn) {
-                mobileBtn.addEventListener('click', toggleMobileMenu);
             }
         });
     </script>
