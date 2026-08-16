@@ -24,7 +24,6 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
 
     <main class="flex-1 ml-4 md:ml-64 p-4 sm:p-8">
 
-    <main class="flex-1 ml-4 md:ml-64 p-4 sm:p-8">
         <header class="flex justify-between items-center mb-8">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">Submit New Report</h1>

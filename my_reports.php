@@ -32,8 +32,6 @@ try {
     <?php include __DIR__ . '/includes/sidebar.php'; ?>
 
     <main class="flex-1 ml-4 md:ml-64 p-4 sm:p-8">
-
-    <main class="flex-1 ml-4 md:ml-64 p-4 sm:p-8">
         <header class="flex justify-between items-center mb-8">
             <div>
                 <h1 class="text-3xl font-bold text-gray-900">My Reports</h1>
@@ -55,7 +53,6 @@ try {
                     <?php
                         $statusLabel = ucwords(str_replace('_', ' ', $report['status']));
                         $badgeClass = 'bg-gray-100 text-gray-700';
-                        if ($report['status'] === 'submitted') $badgeClass = 'bg-amber-100 text-amber-700';
                         if ($report['status'] === 'verified') $badgeClass = 'bg-blue-100 text-blue-700';
                         if ($report['status'] === 'assigned') $badgeClass = 'bg-indigo-100 text-indigo-700';
                         if ($report['status'] === 'responding') $badgeClass = 'bg-purple-100 text-purple-700';
