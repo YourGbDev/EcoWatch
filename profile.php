@@ -46,7 +46,6 @@ try {
     </aside>
 
     <main class="flex-1 p-8">
-        <a href="<?php echo BASE_URL; ?>/dashboard.php" class="text-gray-500 hover:text-indigo-600 mb-6 inline-block">← Back to Dashboard</a>
         <h1 class="text-3xl font-bold mb-2">Profile Settings</h1>
         <p class="text-gray-500 mb-8">Manage your account information and security.</p>
 
