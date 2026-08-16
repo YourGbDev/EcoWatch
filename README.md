@@ -2,7 +2,7 @@
 
 **Environmental Incident Monitoring & Response Platform**
 
-EcoWatch is a web-based environmental incident monitoring system designed for municipalities. It provides citizens a digital channel to report environmental concerns (flooding, illegal dumping, clogged drainage, uncollected garbage) while giving local authorities a structured operations dashboard to receive, triage, coordinate, and resolve those reports.
+EcoWatch is a web-based environmental incident monitoring system designed for municipalities. It provides citizens a digital channel to report environmental concerns (Stagnant Water, Illegal Dumping, Clogged Drainage, Uncollected Public Garbage, Drug-related Community Concern) while giving local authorities a structured operations dashboard to receive, triage, coordinate, and resolve those reports.
 
 ---
 
@@ -19,7 +19,7 @@ EcoWatch is a web-based environmental incident monitoring system designed for mu
 
 ### Citizen Features
 - User registration and authentication
-- Submit environmental incident reports with photo evidence and exact location details
+- Submit environmental incident reports across 5 categories: Stagnant Water, Illegal Dumping, Clogged Drainage, Uncollected Public Garbage, and Drug-related Community Concern
 - Track report status publicly using a unique tracking token (e.g. `EW-XXXXXX`) — no login required
 - View personal report history with full status timeline
 - Update profile and change password
