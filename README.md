@@ -1,3 +1,9 @@
+<img width="1919" height="1065" alt="image" src="https://github.com/user-attachments/assets/4d3a1215-91e9-4011-89b6-b8ac389de10c" />
+<img width="1919" height="1068" alt="image" src="https://github.com/user-attachments/assets/88e524de-2d24-4d60-9709-2d32ddc3d9e8" />
+<img width="1919" height="1068" alt="image" src="https://github.com/user-attachments/assets/4ac98c57-b6dd-453b-881e-d68cfa2e55d5" />
+<img width="1919" height="1071" alt="image" src="https://github.com/user-attachments/assets/2c33933b-0d9a-4b31-8b5a-f39ab808842d" />
+<img width="1919" height="1071" alt="image" src="https://github.com/user-attachments/assets/6936ea08-4457-4f07-be83-e25cc31a23b3" />
+<img width="1919" height="1071" alt="image" src="https://github.com/user-attachments/assets/cf20ea26-52ad-4386-8d71-be43acd963c4" />
 # EcoWatch 🌿
 
 ### A personal project built to address real environmental monitoring needs in Ormoc City, Leyte, Philippines.
