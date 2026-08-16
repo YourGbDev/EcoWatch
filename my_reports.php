@@ -21,6 +21,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <title>My Reports | EcoWatch</title>
     <style>
         body { font-family: 'Inter', sans-serif; }
