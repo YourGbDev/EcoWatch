@@ -18,7 +18,7 @@
 | id | INT | PK, AUTO_INCREMENT | Unique report identifier |
 | user_id | INT | NOT NULL, FK → users(id) | Citizen who submitted |
 | tracking_token | VARCHAR(9) | NOT NULL, UNIQUE | Public tracking reference (EW-XXXXXX) |
-| category | VARCHAR(50) | NOT NULL | flooding, illegal_dumping, clogged_drainage, uncollected_garbage |
+| category | VARCHAR(50) | NOT NULL | flooding, illegal_dumping, clogged_drainage, uncollected_garbage, drug_concern |
 | severity | VARCHAR(20) | DEFAULT 'low' | low, high, critical |
 | barangay | VARCHAR(100) | NOT NULL | Barangay classification |
 | address | TEXT | NOT NULL | Exact location description |

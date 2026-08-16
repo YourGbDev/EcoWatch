@@ -3,7 +3,7 @@ require_once __DIR__ . '/../Includes/csrf.php';
 require_once __DIR__ . '/../db_connection.php';
 
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
-    header("Location: ../login.php");
+    header("Location: " . BASE_URL . "/login.php");
     exit;
 }
 
@@ -178,7 +178,7 @@ try {
 
         async function loadCsrfToken() {
             try {
-                const response = await fetch('api/csrf_token.php');
+                const response = await fetch('<?php echo BASE_URL; ?>/api/csrf_token.php');
                 const data = await response.json();
                 csrfToken = data.csrf_token || '';
             } catch (error) {
@@ -213,7 +213,7 @@ try {
                 limit: 10
             });
 
-            fetch(`../api/admin_fetch.php?${params.toString()}`)
+            fetch(`<?php echo BASE_URL; ?>/api/admin_fetch.php?${params.toString()}`)
             .then(res => res.json())
             .then(data => {
                 if(!data.success) {
@@ -291,7 +291,7 @@ try {
                 alert('Security token not ready. Please wait a moment and try again.');
                 return;
             }
-            fetch('../api/admin_update.php', {
+            fetch('<?php echo BASE_URL; ?>/api/admin_update.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: id, status: currentStatus, csrf_token: csrfToken })
@@ -312,7 +312,7 @@ try {
             content.innerHTML = '<p class="text-slate-500">Loading report details...</p>';
 
             try {
-                const response = await fetch(`api/get_report_detail.php?id=${reportId}`);
+                const response = await fetch(`<?php echo BASE_URL; ?>/api/get_report_detail.php?id=${reportId}`);
                 const data = await response.json();
 
                 if (!data.success) {
@@ -429,7 +429,7 @@ try {
             if (notes && notes.trim()) {
                 body.notes = notes.trim();
             }
-            fetch('../api/admin_update.php', {
+            fetch('<?php echo BASE_URL; ?>/api/admin_update.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)

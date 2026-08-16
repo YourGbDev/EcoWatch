@@ -2,6 +2,11 @@
 // Includes/csrf.php
 // Centralized session security and CSRF protection
 
+// Load shared application config (BASE_URL, etc.).
+// csrf.php is included by every application page, so defining the
+// require once here makes BASE_URL available everywhere.
+require_once __DIR__ . '/../config/config.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params([
         'httponly' => true,

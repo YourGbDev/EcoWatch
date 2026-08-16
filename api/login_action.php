@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['role'] = $user['role'];
         $_SESSION['user_name'] = $user['name'];
 
-        $redirect = ($user['role'] === 'admin') ? '../admin/index.php' : '../dashboard.php';
+        $redirect = ($user['role'] === 'admin') ? BASE_URL . '/admin/index.php' : BASE_URL . '/dashboard.php';
         echo json_encode(['success' => true, 'message' => 'Login successful.', 'redirect' => $redirect]);
         exit;
     } else {

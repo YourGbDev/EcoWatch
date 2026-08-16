@@ -60,6 +60,19 @@ try {
     $historyStmt->execute([':report_id' => $report['id']]);
     $statusHistory = $historyStmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Normalize photo_path to an absolute, document-root-relative URL so that
+    // uploaded report photos render correctly from any page depth (e.g. when
+    // viewed from the admin panel at /admin/). Stored values are relative
+    // ("uploads/<file>"); absolute (http*) or root-absolute (/...) values
+    // are left untouched.
+    if (!empty($report['photo_path'])) {
+        $photoValue = $report['photo_path'];
+        if (strpos($photoValue, 'http') !== 0 && strpos($photoValue, '/') !== 0) {
+            $photoValue = BASE_URL . '/' . ltrim($photoValue, '/');
+        }
+        $report['photo_path'] = $photoValue;
+    }
+
     echo json_encode([
         'success' => true,
         'report' => $report,

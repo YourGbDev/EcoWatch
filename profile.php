@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/Includes/csrf.php';
 
-if (!isset($_SESSION['user_id'])) { header("Location: login.php"); exit(); }
+if (!isset($_SESSION['user_id'])) { header("Location: " . BASE_URL . "/login.php"); exit(); }
 
 require_once __DIR__ . '/db_connection.php';
 
@@ -30,7 +30,7 @@ try {
 </head>
 <body class="bg-gray-50 min-h-screen p-8">
     <main class="max-w-2xl mx-auto">
-        <a href="dashboard.php" class="text-gray-500 hover:text-indigo-600 mb-6 inline-block">← Back to Dashboard</a>
+        <a href="<?php echo BASE_URL; ?>/dashboard.php" class="text-gray-500 hover:text-indigo-600 mb-6 inline-block">← Back to Dashboard</a>
         <h1 class="text-3xl font-bold mb-2">Profile Settings</h1>
         <p class="text-gray-500 mb-8">Manage your account information and security.</p>
 
@@ -91,7 +91,7 @@ try {
             btn.innerText = 'Updating...';
 
             try {
-                const response = await fetch('api/update_profile.php', {
+                const response = await fetch('<?php echo BASE_URL; ?>/api/update_profile.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -123,7 +123,7 @@ try {
             btn.innerText = 'Changing...';
 
             try {
-                const response = await fetch('api/change_password.php', {
+                const response = await fetch('<?php echo BASE_URL; ?>/api/change_password.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)

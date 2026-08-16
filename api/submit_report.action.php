@@ -98,7 +98,7 @@ try {
     $address    = trim($data['address']);
     $description = isset($data['description']) ? trim($data['description']) : null;
 
-    $allowedCategories = ['flooding', 'illegal_dumping', 'clogged_drainage', 'uncollected_garbage'];
+    $allowedCategories = ['flooding', 'illegal_dumping', 'clogged_drainage', 'uncollected_garbage', 'drug_concern'];
     if (!in_array($category, $allowedCategories, true)) {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Invalid category selected.']);

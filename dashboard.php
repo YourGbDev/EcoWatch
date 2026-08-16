@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/Includes/csrf.php';
 
-if (!isset($_SESSION['user_id'])) { header("Location: login.php"); exit(); }
+if (!isset($_SESSION['user_id'])) { header("Location: " . BASE_URL . "/login.php"); exit(); }
 
 require_once __DIR__ . '/db_connection.php';
 
@@ -58,11 +58,11 @@ try {
     <aside class="w-64 bg-[#3B49DF] p-8 text-white">
         <div class="text-2xl font-bold mb-10 flex items-center gap-2">EcoWatch</div>
         <nav class="space-y-4">
-            <a href="dashboard.php" class="nav-link active block p-3 rounded-xl transition">Dashboard</a>
-            <a href="submit_report.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Submit Report</a>
-            <a href="my_reports.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">My Reports</a>
-            <a href="profile.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Profile Settings</a>
-            <form action="api/logout.php" method="POST" class="mt-auto">
+            <a href="<?php echo BASE_URL; ?>/dashboard.php" class="nav-link active block p-3 rounded-xl transition">Dashboard</a>
+            <a href="<?php echo BASE_URL; ?>/submit_report.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Submit Report</a>
+            <a href="<?php echo BASE_URL; ?>/my_reports.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">My Reports</a>
+            <a href="<?php echo BASE_URL; ?>/profile.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Profile Settings</a>
+            <form action="<?php echo BASE_URL; ?>/api/logout.php" method="POST" class="mt-auto">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
                 <button type="submit" class="nav-link block w-full text-left p-3 rounded-xl transition hover:bg-white/10 text-red-300 hover:text-red-100">Logout</button>
             </form>
@@ -107,7 +107,7 @@ try {
                                 <div class="flex flex-col items-center">
                                     <svg class="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                     <p class="text-gray-500 text-sm mb-4">No reports submitted yet.</p>
-                                    <a href="submit_report.php" class="bg-[#3B49DF] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#2D39B5] transition shadow-lg inline-flex items-center space-x-2">
+                                    <a href="<?php echo BASE_URL; ?>/submit_report.php" class="bg-[#3B49DF] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#2D39B5] transition shadow-lg inline-flex items-center space-x-2">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                                         <span>Submit Your First Report</span>
                                     </a>
@@ -141,7 +141,7 @@ try {
 
         <div class="bg-[#1e1b4b] rounded-2xl p-8 text-white shadow-xl">
             <h3 class="font-bold text-xl mb-2">📢 Safety Reminder</h3>
-            <p class="text-indigo-200">During heavy rains, please stay away from flooded areas and monitor our live updates for drainage blockages.</p>
+            <p class="text-indigo-200">During heavy rains, please stay away from stagnant water areas and monitor our live updates for drainage blockages.</p>
         </div>
     </main>
 
@@ -166,7 +166,7 @@ try {
             content.innerHTML = '<p class="text-slate-500">Loading report details...</p>';
 
             try {
-                const response = await fetch(`api/get_report_detail.php?id=${reportId}`);
+                const response = await fetch(`<?php echo BASE_URL; ?>/api/get_report_detail.php?id=${reportId}`);
                 const data = await response.json();
 
                 if (!data.success) {

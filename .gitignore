@@ -1,0 +1,6 @@
+# Uploaded report media (runtime uploads — served by the app, kept on disk)
+/Uploads/
+/uploads/
+
+# Local environment / agent configuration (machine-specific, not shared)
+/.claude/

@@ -8,6 +8,6 @@ if (!validate_csrf_token($token)) {
 }
 
 session_destroy();
-header("Location: ../login.php");
+header("Location: " . BASE_URL . "/login.php");
 exit();
 ?>
