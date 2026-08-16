@@ -1,9 +1,8 @@
 # EcoWatch 🌿
 
-### A Web-Based Environmental Incident Monitoring and Response Coordination Platform for Ormoc City
+### A personal project built to address real environmental monitoring needs in Ormoc City, Leyte, Philippines.
 
-**Capstone Project — Western Leyte College of Ormoc | BSIT | A.Y. 2026–2027**
-**Submitted by:** Gilbert M. Bulado Jr.
+**Ormoc City | Philippines**
 
 EcoWatch is a web-based environmental incident monitoring system designed specifically for Ormoc City. It gives citizens a formal digital channel to report environmental concerns — flooding, illegal dumping, clogged drainage, uncollected garbage, and drug-related community issues — while giving the **City Disaster Risk Reduction and Management Office (CDRRMO)** a structured operations dashboard to receive, triage, coordinate, and resolve those reports.
 
@@ -133,5 +132,4 @@ Each transition is timestamped and logged with CDRRMO notes for full accountabil
 
 ## License
 
-Capstone Project — Bachelor of Science in Information Technology
-Western Leyte College of Ormoc | A.Y. 2026–2027
+This is an open-source project. Feel free to fork, modify, and adapt for your own community's needs.
