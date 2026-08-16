@@ -1,6 +1,108 @@
-# Uploaded report media (runtime uploads — served by the app, kept on disk)
+# ===========================================
+# EcoWatch - Git Ignore Configuration
+# ===========================================
+
+# ===========================================
+# Environment Variables (Critical Security)
+# ===========================================
+# Environment configuration
+.env
+.env.*
+.env.example
+.env.development
+.env.production
+.env.local
+.environment
+.envrc
+.conflocalrc
+
+# Allow .env.example template to be committed
+!.env.example
+
+# ===========================================
+# Uploaded Files (Runtime Data)
+# ===========================================
+# User-uploaded report media (runtime uploads - served by the app)
 /Uploads/
 /uploads/
 
-# Local environment / agent configuration (machine-specific, not shared)
+# ===========================================
+# Local Development Settings
+# ===========================================
+# AI/ML configuration files
 /.claude/
+/.cursor/
+/.idea/
+/.vscode/
+
+# IDE and editor settings
+.idea/
+.vscode/
+*.sublime-*
+*.swp
+*.swo
+*~
+.project
+.settings/
+.buildpath
+
+# ===========================================
+# Logs and Temporary Files
+# ===========================================
+# Application logs
+*.log
+logs/
+log/
+logger/
+
+# Debug and development files
+debug.log
+error.log
+*.tmp
+*.temp
+*.cache
+
+# ===========================================
+# Database and Backup Files
+# ===========================================
+# Database backups (may contain sensitive data)
+*.sql
+*.sql.gz
+*.dump
+*.backup
+*.bak
+
+# ===========================================
+# System Files
+# ===========================================
+# Operating system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ===========================================
+# Composer and Node Modules
+# ===========================================
+/vendor/
+/node_modules/
+/composer.lock
+/package-lock.json
+/yarn.lock
+
+# ===========================================
+# Development Artifacts
+# ===========================================
+# Build outputs
+dist/
+build/
+
+# Coverage reports
+coverage/
+*.clover
+
+# Test results
+.phpunit.result.cache

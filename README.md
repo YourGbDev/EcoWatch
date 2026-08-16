@@ -1,22 +1,8 @@
-<img width="1919" height="1071" alt="image" src="https://github.com/user-attachments/assets/cf20ea26-52ad-4386-8d71-be43acd963c4" />
-<img width="1919" height="1071" alt="image" src="https://github.com/user-attachments/assets/6936ea08-4457-4f07-be83-e25cc31a23b3" />
-<img width="1919" height="1071" alt="image" src="https://github.com/user-attachments/assets/2c33933b-0d9a-4b31-8b5a-f39ab808842d" />
-<img width="1919" height="1068" alt="image" src="https://github.com/user-attachments/assets/4ac98c57-b6dd-453b-881e-d68cfa2e55d5" />
-<img width="1919" height="1068" alt="image" src="https://github.com/user-attachments/assets/88e524de-2d24-4d60-9709-2d32ddc3d9e8" />
-<img width="1919" height="1065" alt="image" src="https://github.com/user-attachments/assets/4d3a1215-91e9-4011-89b6-b8ac389de10c" />
-
-
-
-
 # EcoWatch 🌿
 
-### A personal project built to address real environmental monitoring needs in Ormoc City, Leyte, Philippines.
+**Environmental Incident Monitoring & Response Platform**
 
-**Ormoc City | Philippines**
-
-EcoWatch is a web-based environmental incident monitoring system designed specifically for Ormoc City. It gives citizens a formal digital channel to report environmental concerns — flooding, illegal dumping, clogged drainage, uncollected garbage, and drug-related community issues — while giving the **City Disaster Risk Reduction and Management Office (CDRRMO)** a structured operations dashboard to receive, triage, coordinate, and resolve those reports.
-
-Before EcoWatch, residents relied on informal channels like Facebook posts and group chats to report incidents. Reports were lost, ignored, or left unresolved with no accountability. EcoWatch bridges that gap — making local environmental governance more transparent, accountable, and data-driven.
+EcoWatch is a web-based environmental incident monitoring system designed for municipalities. It provides citizens a digital channel to report environmental concerns (flooding, illegal dumping, clogged drainage, uncollected garbage) while giving local authorities a structured operations dashboard to receive, triage, coordinate, and resolve those reports.
 
 ---
 
@@ -36,28 +22,27 @@ Before EcoWatch, residents relied on informal channels like Facebook posts and g
 - Submit environmental incident reports with photo evidence and exact location details
 - Track report status publicly using a unique tracking token (e.g. `EW-XXXXXX`) — no login required
 - View personal report history with full status timeline
-- Anonymous reporting channel for drug-related community concerns
 - Update profile and change password
 
-### CDRRMO Admin Features
+### Administrative Features
 - Server-side authentication gate
 - Operations dashboard with real-time report statistics
-- Paginated report queue with search and filtering by status, barangay, severity, and category
-- Full report detail review with status lifecycle management and admin notes
-- Complete audit trail — every status change is logged with timestamps and CDRRMO notes
-- Barangay-level data for identifying recurring problem areas and resource allocation
+- Paginated report queue with search and filtering
+- Full report detail review with status lifecycle management
+- Complete audit trail of all status changes
+- Geospatial data for identifying problem areas
 
 ---
 
 ## Status Lifecycle
 
-Every submitted report moves through a structured lifecycle managed by the CDRRMO:
+Every submitted report moves through a structured lifecycle:
 
 ```
 submitted → verified → assigned → responding → resolved
 ```
 
-Each transition is timestamped and logged with CDRRMO notes for full accountability.
+Each transition is timestamped and logged for full accountability.
 
 ---
 
@@ -70,53 +55,58 @@ Each transition is timestamped and logged with CDRRMO notes for full accountabil
 
 ### Installation
 
-1. Clone or copy the project to `C:\xampp\htdocs\ecowatch\`
+1. Clone or copy the project to your XAMPP `htdocs` directory
 2. Start Apache and MySQL in XAMPP Control Panel
 3. Create database `smart_flood_waste` in phpMyAdmin
 4. Import `database/setup.sql` into the database
-5. Navigate to `http://localhost/ecowatch`
+5. Navigate to the application URL
 
-### Demo Accounts
+### Demo Credentials
+
+The database seed data includes demo accounts for testing:
 
 | Role | Email | Password |
 |------|-------|----------|
-| CDRRMO Admin | `admin@ecowatch.gov` | `admin123` |
-| Citizen | `demo@ecowatch.gov` | `demo1234` |
+| Admin | admin@ecowatch.test | DemoPass123! |
+| User | demo@ecowatch.test | DemoPass123! |
+
+⚠️ **Important**: These are demo accounts only. Always change credentials for production deployments.
+
+---
+
+## Configuration
+
+### Environment Variables
+
+Copy the example configuration and update with your production values:
+
+```bash
+cp .env.example .env
+```
+
+Key configuration options:
+- Database connection settings
+- Session secret keys
+- Application base URL
 
 ---
 
 ## File Structure
 
 ```
-├── admin/
-│   └── index.php                  # CDRRMO admin control panel (PHP-gated)
-├── api/
-│   ├── admin_fetch.php            # Admin report list API
-│   ├── admin_update.php           # Admin status update API
-│   ├── change_password.php        # Password change API
-│   ├── csrf_token.php             # Public CSRF token endpoint
-│   ├── get_report_detail.php      # Report details API
-│   ├── login_action.php           # Login API
-│   ├── logout.php                 # Logout API
-│   ├── register.php               # Registration API
-│   ├── submit_report.action.php   # Report submission API
-│   ├── track_report.php           # Public tracking token API
-│   └── update_profile.php         # Profile update API
-├── database/
-│   └── setup.sql                  # Schema + seed data
-├── docs/
-│   ├── ER_Diagram.md              # Database schema documentation
-│   ├── Architecture.md            # System architecture
-│   └── Test_Cases.md              # QA test cases
-├── Includes/
-│   └── csrf.php                   # Session security + CSRF helpers
-├── index.html                     # Homepage with modals
-├── db_connection.php              # PDO database connection
-├── dashboard.php                  # Citizen dashboard
-├── submit_report.php              # Report submission page
-├── my_reports.php                 # Citizen report list
-├── profile.php                    # Profile settings
-└── login.php                      # Redirect to index.html
+├── admin/              # Administrative interface
+├── api/                # REST API endpoints
+├── config/             # Configuration files
+├── database/           # Database schema and seed data
+├── docs/               # Documentation
+├── includes/           # Shared components
+├── index.html          # Homepage
+├── db_connection.php   # Database connection
+├── dashboard.php       # User dashboard
+├── submit_report.php   # Report submission
+├── my_reports.php      # User's report history
+├── profile.php         # Profile management
+└── login.php           # Authentication redirect
 ```
 
 ---
@@ -128,7 +118,8 @@ Each transition is timestamped and logged with CDRRMO notes for full accountabil
 - **SQL Injection Prevention**: 100% PDO prepared statements
 - **XSS Prevention**: Server-side `htmlspecialchars()` and client-side text escaping
 - **Session Security**: `HttpOnly` and `SameSite=Strict` cookie flags
-- **File Upload Security**: MIME validation, 5MB limit, random filenames
+- **File Upload Security**: MIME validation, size limits, random filenames
+- **Authorization**: Role-based access control for admin functions
 
 ---
 
@@ -136,10 +127,34 @@ Each transition is timestamped and logged with CDRRMO notes for full accountabil
 
 - `docs/ER_Diagram.md` — Database schema and relationships
 - `docs/Architecture.md` — System design and data flows
-- `docs/Test_Cases.md` — QA test results
+- `docs/Test_Cases.md` — QA test cases
+
+---
+
+## Configuration Files
+
+The following files are excluded from the repository (see `.gitignore`):
+
+- `.env` — Local environment configuration (not shared)
+- `.env.example` — Template for environment configuration
+- `.env.production` — Production environment template
+- `Uploads/` — User-uploaded media files
+- `.claude/` — Local AI development settings
 
 ---
 
 ## License
 
-This is an open-source project. Feel free to fork, modify, and adapt for your own community's needs.
+This is an open-source project for educational and community purposes.
+
+---
+
+## Disclaimer
+
+This is a demonstration/capstone project. The following apply:
+
+- All demo credentials are for testing only
+- Demo data is fictional and for demonstration purposes
+- Security features are implemented as educational examples
+- Not recommended for production use without additional hardening
+- User data and credentials should be properly managed in production deployments
