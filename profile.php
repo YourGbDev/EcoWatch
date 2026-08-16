@@ -30,8 +30,20 @@ try {
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
+    <!-- Mobile hamburger button (hidden on desktop) -->
+    <button id="mobile-menu-btn" class="hidden md:hidden fixed top-4 left-4 z-50 bg-[#3B49DF] text-white p-3 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#3B49DF] transition-all">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+    </button>
+    
+    <!-- Top bar for closing mobile menu -->
+    <button id="close-mobile-menu" class="hidden md:hidden fixed top-4 right-4 z-50 bg-white text-[#3B49DF] p-3 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#3B49DF] transition-all">
+        <i data-lucide="x" class="w-5 h-5"></i>
+    </button>
 
-    <aside class="w-64 bg-[#3B49DF] p-8 text-white fixed top-0 left-0 h-screen overflow-y-auto shadow-xl z-40">
+    <!-- Mobile overlay (appears when sidebar is open) -->
+    <div id="mobile-menu-overlay" class="hidden md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40" style="display: none;"></div>
+
+    <aside id="sidebar" class="w-64 bg-[#3B49DF] p-8 text-white fixed top-0 left-0 h-screen overflow-y-auto shadow-xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0">
         <div class="text-2xl font-bold mb-10 flex items-center gap-2">EcoWatch</div>
         <nav class="space-y-4">
             <a href="<?php echo BASE_URL; ?>/dashboard.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Dashboard</a>
@@ -45,7 +57,7 @@ try {
         </nav>
     </aside>
 
-    <main class="flex-1 ml-64 p-8">
+    <main class="flex-1 ml-64 p-4 sm:p-8">
         <h1 class="text-3xl font-bold mb-2">Profile Settings</h1>
         <p class="text-gray-500 mb-8">Manage your account information and security.</p>
 
@@ -153,6 +165,37 @@ try {
                 btn.innerText = 'Change Password';
             }
         }
+
+        // Mobile menu toggle functions
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-mobile-menu');
+            
+            if (sidebar && sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                if (overlay) overlay.classList.remove('hidden');
+                if (mobileBtn) mobileBtn.classList.add('hidden');
+                if (closeBtn) closeBtn.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                if (overlay) overlay.classList.remove('hidden');
+                if (mobileBtn) mobileBtn.classList.remove('hidden');
+                if (closeBtn) closeBtn.classList.add('hidden');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu button
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            const closeBtn = document.getElementById('close-mobile-menu');
+            
+            if (mobileBtn) mobileBtn.addEventListener('click', toggleMobileMenu);
+            if (overlay) overlay.addEventListener('click', toggleMobileMenu);
+            if (closeBtn) closeBtn.addEventListener('click', toggleMobileMenu);
+        });
     </script>
 </body>
 </html>

@@ -153,7 +153,7 @@
                 <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
                     <div onclick="openReportWithCategory('flooding')" class="bg-brand-light p-8 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-xl hover:border-brand-blue transition cursor-pointer group">
                         <div class="bg-blue-100 text-brand-blue p-3 rounded-xl w-fit mb-6 group-hover:bg-brand-blue group-hover:text-white transition"><i data-lucide="droplet" class="w-6 h-6"></i></div>
-                        <h3 class="font-bold text-xl mb-3">Severe Flooding</h3>
+                        <h3 class="font-bold text-xl mb-3">Stagnant Water</h3>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Stagnant flash floods cutting off community roads and infrastructure points.</p>
                         <span class="text-brand-blue text-xs font-bold inline-flex items-center space-x-1"><span>Report this</span> <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i></span>
                     </div>
@@ -400,7 +400,7 @@
                     <label class="block text-sm font-semibold text-slate-700 mb-1">Issue Category *</label>
                     <select id="form-category" name="category" required class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
                         <option value="">Select infrastructure fault...</option>
-                        <option value="flooding">Severe Flooding</option>
+                        <option value="flooding">Stagnant Water</option>
                         <option value="illegal_dumping">Illegal Waste Dumping</option>
                         <option value="clogged_drainage">Clogged Drainage System</option>
                         <option value="uncollected_garbage">Uncollected Public Garbage</option>
@@ -520,10 +520,18 @@
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">Password</label>
-                    <input type="password" name="password" placeholder="••••••••" required class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                    <div class="relative">
+                        <input type="password" name="password" id="login-password" placeholder="••••••••" required class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue pr-12">
+                        <button type="button" class="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-600" onclick="togglePassword('login-password')" aria-label="Toggle password visibility">
+                            <i data-lucide="eye" class="w-5 h-5"></i>
+                        </button>
+                    </div>
                 </div>
                 <button type="submit" class="w-full bg-brand-blue text-white py-3 rounded-xl font-semibold hover:bg-blue-700 shadow-md transition">Sign In</button>
-            </form>
+            <button type="button" onclick="openModal('forgot-password-modal')" class="mt-4 text-sm text-slate-600 hover:text-brand-blue transition text-center">
+                Forgot your password?
+            </button>
+        </form>
         </div>
     </div>
 
@@ -546,13 +554,48 @@
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">Password</label>
-                    <input type="password" id="reg_password" name="password" placeholder="Minimum 8 characters" required minlength="8" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                    <div class="relative">
+                        <input type="password" id="reg_password" name="password" placeholder="Minimum 8 characters" required minlength="8" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue pr-12">
+                        <button type="button" class="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-600" onclick="togglePassword('reg_password')" aria-label="Toggle password visibility">
+                            <i data-lucide="eye" class="w-5 h-5"></i>
+                        </button>
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1">Confirm Password</label>
-                    <input type="password" id="confirm_password" placeholder="Re-enter password" required minlength="8" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                    <div class="relative">
+                        <input type="password" id="confirm_password" placeholder="Re-enter password" required minlength="8" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue pr-12">
+                        <button type="button" class="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-600" onclick="togglePassword('confirm_password')" aria-label="Toggle password visibility">
+                            <i data-lucide="eye" class="w-5 h-5"></i>
+                        </button>
+                    </div>
                 </div>
                 <button type="submit" class="w-full bg-brand-green text-white py-3 rounded-xl font-semibold hover:bg-emerald-700 shadow-md transition">Register Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FORGOT PASSWORD MODAL -->
+    <div id="forgot-password-modal" class="fixed inset-0 z-50 flex items-center justify-center invisible transition-all duration-300">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('forgot-password-modal')"></div>
+        <div class="bg-white rounded-2xl w-full max-w-md p-6 md:p-8 shadow-2xl relative z-10 mx-4 modal-animate max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('forgot-password-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h3 class="text-2xl font-bold text-brand-dark mb-2">Forgot Password</h3>
+            <p class="text-slate-500 text-sm mb-6">Enter your email to reset your password.</p>
+            <form id="forgot-password-form" class="space-y-4" onsubmit="handleForgotPassword(event)">
+                <input type="hidden" name="csrf_token" id="forgot-csrf-token" value="">
+                <div id="forgot-email-error" class="hidden text-red-500 text-sm mb-2">Please enter a valid email address.</div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Email Address</label>
+                    <input type="email" name="email" placeholder="name@example.com" required class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                </div>
+                <button type="submit" class="w-full bg-brand-blue text-white py-3 rounded-xl font-semibold hover:bg-blue-700 shadow-md transition" id="forgot-submit-btn">Send Reset Link</button>
+                <div id="forgot-success" class="hidden text-center pt-4">
+                    <div class="mx-auto w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-3">
+                        <i data-lucide="check" class="w-6 h-6"></i>
+                    </div>
+                    <p class="text-green-600 text-sm" id="forgot-success-msg">If an account exists with this email, a reset link has been sent.</p>
+                </div>
             </form>
         </div>
     </div>
@@ -604,18 +647,88 @@
                 const reportInput = document.getElementById('csrf-token');
                 const loginInput = document.getElementById('login-csrf-token');
                 const registerInput = document.getElementById('register-csrf-token');
+                const forgotInput = document.getElementById('forgot-csrf-token');
                 if (reportInput) reportInput.value = token;
                 if (loginInput) loginInput.value = token;
                 if (registerInput) registerInput.value = token;
+                if (forgotInput) forgotInput.value = token;
             } catch (error) {
                 console.error('Failed to load CSRF token:', error);
             }
+        }
+
+        // Forgot password handler
+        function handleForgotPassword(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('forgot-password-form');
+            const emailInput = form.querySelector('input[name="email"]');
+            const email = emailInput.value.trim();
+            const errorDiv = document.getElementById('forgot-email-error');
+            const successDiv = document.getElementById('forgot-success');
+            const submitBtn = document.getElementById('forgot-submit-btn');
+            
+            // Clear previous errors
+            errorDiv.classList.add('hidden');
+            
+            // Validate email
+            if (!email || !validateEmail(email)) {
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Sending...';
+            
+            const formData = new FormData(form);
+            
+            fetch('api/forgot_password.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                form.classList.add('hidden');
+                successDiv.classList.remove('hidden');
+                document.getElementById('forgot-success-msg').innerText = data.message || 'If an account exists with this email, a reset link has been sent.';
+            })
+            .catch(error => {
+                console.error('Forgot password error:', error);
+                alert('Something went wrong. Please try again.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Send Reset Link';
+            });
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             loadCsrfToken();
             lucide.createIcons();
         });
+
+        // Password visibility toggle function
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = input.parentElement.querySelector('button');
+            
+            if (!input || !button) return;
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.innerHTML = '<i data-lucide="eye-off" class="w-5 h-5"></i>';
+            } else {
+                input.type = 'password';
+                button.innerHTML = '<i data-lucide="eye" class="w-5 h-5"></i>';
+            }
+            
+            lucide.createIcons();
+        }
 
         // Context Triggered Submissions (From Problem cards)
         function openReportWithCategory(categoryName) {

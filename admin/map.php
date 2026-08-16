@@ -53,7 +53,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
 </head>
 <body class="bg-brand-light text-brand-dark antialiased font-sans">
 
-    <!-- Header (matches admin/index.php) -->
+    <!-- Header -->
     <header class="bg-white border-b border-slate-200 h-20 flex items-center justify-between px-8 sticky top-0 z-30">
         <div class="flex items-center space-x-3">
             <div class="bg-[#3B49DF] text-white p-2 rounded-xl"><i data-lucide="shield-alert" class="w-5 h-5"></i></div>
@@ -231,6 +231,17 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
             return labels[severity] || severity;
         }
 
+        function categoryLabel(cat) {
+            const labels = { 
+                flooding: 'Stagnant Water',
+                illegal_dumping: 'Illegal Dumping',
+                clogged_drainage: 'Clogged Drainage',
+                uncollected_garbage: 'Uncollected Garbage',
+                drug_concern: 'Drug Concern'
+            };
+            return labels[cat] || cat.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+
         function createPopupContent(report) {
             return `
                 <div class="min-w-[250px]">
@@ -239,7 +250,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
                         <span class="px-2 py-0.5 text-xs font-bold uppercase rounded-full bg-[${severityColors[report.severity]}] text-white">${severityLabel(report.severity)}</span>
                     </div>
                     <div class="space-y-1.5 text-sm text-slate-600">
-                        <p><span class="font-semibold text-slate-900">${report.category.replace(/_/g, ' ')}</span></p>
+                        <p><span class="font-semibold text-slate-900">${categoryLabel(report.category)}</span></p>
                         <p><span class="font-semibold text-slate-900">Barangay:</span> ${report.barangay}</p>
                         <p><span class="font-semibold text-slate-900">Address:</span> ${report.address}</p>
                         <p><span class="font-semibold text-slate-900">Status:</span> <span class="capitalize">${report.status.replace(/_/g, ' ')}</span></p>

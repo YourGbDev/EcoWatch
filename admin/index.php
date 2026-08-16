@@ -203,11 +203,24 @@ try {
 
         lucide.createIcons();
 
+        // Category label mapping for display
+        const CATEGORY_LABELS = {
+            flooding: 'Stagnant Water',
+            illegal_dumping: 'Illegal Dumping',
+            clogged_drainage: 'Clogged Drainage',
+            uncollected_garbage: 'Uncollected Garbage',
+            drug_concern: 'Drug Concern'
+        };
+
         function escapeHtml(text) {
             if (text === null || text === undefined) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        function getCategoryLabel(cat) {
+            return CATEGORY_LABELS[cat] || cat.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
         }
 
         function loadTickets(resetPage = true) {
@@ -262,7 +275,7 @@ try {
                     return `
                         <tr class="hover:bg-slate-50/80 transition cursor-pointer" onclick="openAdminDetail(${report.id}, '${escapeHtml(report.tracking_token)}', '${escapeHtml(report.status)}')">
                             <td class="py-4 px-6 font-mono font-bold text-slate-900">#${escapeHtml(report.tracking_token)}</td>
-                            <td class="py-4 px-6 font-semibold capitalize">${escapeHtml(report.category.replace('_', ' '))}</td>
+                            <td class="py-4 px-6 font-semibold">${escapeHtml(getCategoryLabel(report.category))}</td>
                             <td class="py-4 px-6"><span class="px-2.5 py-1 rounded-md text-xs uppercase ${severityBadge}">${escapeHtml(report.severity)}</span></td>
                             <td class="py-4 px-6 text-slate-600">${escapeHtml(report.barangay)}</td>
                             <td class="py-4 px-6 text-slate-600 max-w-xs truncate">${escapeHtml(report.address)}</td>
@@ -379,7 +392,7 @@ try {
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-6">
-                        <div><span class="font-semibold text-gray-700">Category:</span> <p class="text-gray-600 capitalize">${report.category.replace('_', ' ')}</p></div>
+                        <div><span class="font-semibold text-gray-700">Category:</span> <p class="text-gray-600">${escapeHtml(getCategoryLabel(report.category))}</p></div>
                         <div><span class="font-semibold text-gray-700">Severity:</span> <p class="text-gray-600 capitalize">${report.severity}</p></div>
                         <div class="md:col-span-2"><span class="font-semibold text-gray-700">Barangay:</span> <p class="text-gray-600">${escapeHtml(report.barangay)}</p></div>
                         <div class="md:col-span-2"><span class="font-semibold text-gray-700">Address:</span> <p class="text-gray-600">${escapeHtml(report.address)}</p></div>
