@@ -26,10 +26,26 @@ try {
     <title>Profile Settings | EcoWatch</title>
     <style>
         body { font-family: 'Inter', sans-serif; }
+        .nav-link.active { background: rgba(255, 255, 255, 0.15); color: #FFFFFF; }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen p-8">
-    <main class="max-w-2xl mx-auto">
+<body class="bg-gray-50 flex min-h-screen">
+
+    <aside class="w-64 bg-[#3B49DF] p-8 text-white">
+        <div class="text-2xl font-bold mb-10 flex items-center gap-2">EcoWatch</div>
+        <nav class="space-y-4">
+            <a href="<?php echo BASE_URL; ?>/dashboard.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Dashboard</a>
+            <a href="<?php echo BASE_URL; ?>/submit_report.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Submit Report</a>
+            <a href="<?php echo BASE_URL; ?>/my_reports.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">My Reports</a>
+            <a href="<?php echo BASE_URL; ?>/profile.php" class="nav-link active block p-3 hover:bg-white/10 rounded-xl transition">Profile Settings</a>
+            <form action="<?php echo BASE_URL; ?>/api/logout.php" method="POST" class="mt-auto">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
+                <button type="submit" class="nav-link block w-full text-left p-3 rounded-xl transition hover:bg-white/10 text-red-300 hover:text-red-100">Logout</button>
+            </form>
+        </nav>
+    </aside>
+
+    <main class="flex-1 p-8">
         <a href="<?php echo BASE_URL; ?>/dashboard.php" class="text-gray-500 hover:text-indigo-600 mb-6 inline-block">← Back to Dashboard</a>
         <h1 class="text-3xl font-bold mb-2">Profile Settings</h1>
         <p class="text-gray-500 mb-8">Manage your account information and security.</p>
