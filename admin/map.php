@@ -60,7 +60,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
             <span class="font-bold text-lg tracking-tight">EcoWatch <span class="text-slate-400 font-normal">| Operations Terminal</span></span>
         </div>
         <div class="flex items-center space-x-4">
-            <span class="text-sm font-semibold bg-blue-50 text-[#3B49DF] px-3 py-1.5 rounded-lg">Muncipal Hub #1</span>
+            <span class="text-xs bg-slate-200 text-slate-600 px-2.5 py-1 rounded-full ml-2">#1</span>
             <a href="<?php echo BASE_URL; ?>/api/logout.php" class="text-slate-500 hover:text-slate-700 text-sm font-medium flex items-center space-x-2 px-3 py-1.5 rounded-xl hover:bg-slate-50 transition-colors">
                 <i data-lucide="log-out" class="w-4 h-4"></i>
                 <span>Logout</span>
@@ -95,10 +95,10 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
                 <div class="flex items-center gap-2">
                     <span class="text-sm font-semibold text-slate-700">View:</span>
                     <div class="flex bg-white border border-slate-200 rounded-xl p-1" role="radiogroup" aria-label="Map view">
-                        <button id="view-markers" type="button" class="view-btn active px-4 py-2 text-sm font-semibold rounded-lg text-white bg-[#3B49DF] transition-colors" role="radio" aria-checked="true">
+                        <button id="view-markers" type="button" class="view-btn active px-4 py-2 text-sm font-semibold rounded-xl text-white bg-[#3B49DF] transition-colors" role="radio" aria-checked="true">
                             <i data-lucide="map-pin" class="w-4 h-4 inline-block mr-1"></i> Markers
                         </button>
-                        <button id="view-heatmap" type="button" class="view-btn px-4 py-2 text-sm font-semibold rounded-lg text-slate-500 hover:text-slate-700 transition-colors" role="radio" aria-checked="false">
+                        <button id="view-heatmap" type="button" class="view-btn px-4 py-2 text-sm font-semibold rounded-xl text-slate-500 hover:text-slate-700 transition-colors" role="radio" aria-checked="false">
                             <i data-lucide="flame" class="w-4 h-4 inline-block mr-1"></i> Heatmap
                         </button>
                     </div>

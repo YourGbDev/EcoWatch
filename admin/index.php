@@ -50,7 +50,7 @@ try {
             <span class="font-bold text-lg tracking-tight">EcoWatch <span class="text-slate-400 font-normal">| Operations Terminal</span></span>
         </div>
         <div class="flex items-center space-x-4">
-            <span class="text-sm font-semibold bg-blue-50 text-brand-blue px-3 py-1.5 rounded-lg">Muncipal Hub #1</span>
+            <span class="text-xs bg-slate-200 text-slate-600 px-2.5 py-1 rounded-full ml-2">#1</span>
             <a href="<?php echo BASE_URL; ?>/api/logout.php" class="text-slate-500 hover:text-slate-700 text-sm font-medium flex items-center space-x-2 px-3 py-1.5 rounded-xl hover:bg-slate-50 transition-colors">
                 <i data-lucide="log-out" class="w-4 h-4"></i>
                 <span>Logout</span>
@@ -269,7 +269,7 @@ try {
                     if(report.severity === 'critical') severityBadge = "bg-red-50 text-red-700 font-bold animate-pulse";
 
                     const photoCell = report.photo_path 
-                        ? `<td class="py-4 px-6"><img src="${escapeHtml(report.photo_path)}" class="w-12 h-12 object-cover rounded-lg border border-slate-200 cursor-pointer hover:opacity-80" onclick="event.stopPropagation(); window.open('${escapeHtml(report.photo_path)}', '_blank')"></td>`
+                        ? `<td class="py-4 px-6"><img src="${escapeHtml(report.photo_path)}" class="w-12 h-12 object-cover rounded-xl border border-slate-200 cursor-pointer hover:opacity-80" onclick="event.stopPropagation(); window.open('${escapeHtml(report.photo_path)}', '_blank')"></td>`
                         : '<td class="py-4 px-6 text-slate-400">-</td>';
 
                     return `
@@ -281,7 +281,7 @@ try {
                             <td class="py-4 px-6 text-slate-600 max-w-xs truncate">${escapeHtml(report.address)}</td>
                             ${photoCell}
                             <td class="py-4 px-6" onclick="event.stopPropagation()">
-                                <select onchange="updateTicketStatus(${report.id}, this.value)" class="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-blue font-medium text-slate-700">
+                                <select onchange="updateTicketStatus(${report.id}, this.value)" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-blue font-medium text-slate-700">
                                     <option value="submitted" ${report.status === 'submitted' ? 'selected' : ''}>Submitted</option>
                                     <option value="verified" ${report.status === 'verified' ? 'selected' : ''}>Verified</option>
                                     <option value="assigned" ${report.status === 'assigned' ? 'selected' : ''}>Assigned</option>
@@ -409,11 +409,11 @@ try {
                     <div class="mt-6 pt-6 border-t border-gray-100">
                         <h4 class="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">Update Status</h4>
                         <div class="flex flex-col sm:flex-row gap-3">
-                            <select id="admin-status-select" class="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue font-medium text-slate-700">
+                            <select id="admin-status-select" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue font-medium text-slate-700">
                                 ${statusOptions}
                             </select>
-                            <input type="text" id="admin-notes-input" placeholder="Add notes (optional)" class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue text-sm">
-                            <button onclick="adminUpdateFromModal(${report.id}, document.getElementById('admin-status-select').value, document.getElementById('admin-notes-input').value)" class="bg-brand-blue text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-800 transition shadow-sm">Update</button>
+                            <input type="text" id="admin-notes-input" placeholder="Add notes (optional)" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue text-sm">
+                            <button onclick="adminUpdateFromModal(${report.id}, document.getElementById('admin-status-select').value, document.getElementById('admin-notes-input').value)" class="bg-brand-blue text-white px-4 py-2 rounded-xl font-semibold hover:bg-blue-800 transition shadow-sm">Update</button>
                         </div>
                     </div>
                 `;
