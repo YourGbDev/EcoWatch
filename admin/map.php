@@ -61,6 +61,10 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
         </div>
         <div class="flex items-center space-x-4">
             <span class="text-sm font-semibold bg-blue-50 text-[#3B49DF] px-3 py-1.5 rounded-lg">Muncipal Hub #1</span>
+            <a href="<?php echo BASE_URL; ?>/api/logout.php" class="text-slate-500 hover:text-slate-700 text-sm font-medium flex items-center space-x-2 px-3 py-1.5 rounded-xl hover:bg-slate-50 transition-colors">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                <span>Logout</span>
+            </a>
         </div>
     </header>
 

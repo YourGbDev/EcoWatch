@@ -40,7 +40,6 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
 </head>
 <body class="bg-brand-light text-brand-dark antialiased font-sans">
 
-    <!-- Header (matches admin/index.php) -->
     <header class="bg-white border-b border-slate-200 h-20 flex items-center justify-between px-8 sticky top-0 z-30">
         <div class="flex items-center space-x-3">
             <div class="bg-[#3B49DF] text-white p-2 rounded-xl"><i data-lucide="shield-alert" class="w-5 h-5"></i></div>
@@ -48,6 +47,10 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
         </div>
         <div class="flex items-center space-x-4">
             <span class="text-sm font-semibold bg-blue-50 text-[#3B49DF] px-3 py-1.5 rounded-lg">Muncipal Hub #1</span>
+            <a href="<?php echo BASE_URL; ?>/api/logout.php" class="text-slate-500 hover:text-slate-700 text-sm font-medium flex items-center space-x-2 px-3 py-1.5 rounded-xl hover:bg-slate-50 transition-colors">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                <span>Logout</span>
+            </a>
         </div>
     </header>
 
