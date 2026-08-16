@@ -236,7 +236,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#6474a5', stepSize: 1, precision: 0 } },
+                        x: { grid: { display: false }, ticks: { color: '#6474a5', stepSize: 1, precision: 0, callback: function(value) { return Number.isInteger(value) ? value : null; } } },
                         y: { grid: { display: false }, ticks: { color: '#6474a5' } }
                     }
                 }
@@ -287,7 +287,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#6474a5', stepSize: 1, precision: 0 } },
+                        x: { grid: { display: false }, ticks: { color: '#6474a5', stepSize: 1, precision: 0, callback: function(value) { return Number.isInteger(value) ? value : null; } } },
                         y: { grid: { display: false }, ticks: { color: '#6474a5' } }
                     }
                 }
@@ -324,7 +324,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#6474a5', maxRotation: 90, minRotation: 90 } },
+                        x: { grid: { display: false }, ticks: { color: '#6474a5', maxRotation: 45, minRotation: 45 } },
                         y: { grid: { display: false }, ticks: { color: '#6474a5', stepSize: 1, precision: 0 }, beginAtZero: true }
                     }
                 }
