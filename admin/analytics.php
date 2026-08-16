@@ -236,7 +236,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#6474a5', stepSize: 1, precision: 0, callback: function(value) { return Number.isInteger(value) ? value : null; } } },
+                        x: { grid: { display: false }, beginAtZero: true, ticks: { color: '#6474a5', stepSize: 1, precision: 0, callback: function(value) { if (Number.isInteger(value)) return value; } } },
                         y: { grid: { display: false }, ticks: { color: '#6474a5' } }
                     }
                 }
@@ -287,7 +287,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#6474a5', stepSize: 1, precision: 0, callback: function(value) { return Number.isInteger(value) ? value : null; } } },
+                        x: { grid: { display: false }, beginAtZero: true, ticks: { color: '#6474a5', stepSize: 1, precision: 0, callback: function(value) { if (Number.isInteger(value)) return value; } } },
                         y: { grid: { display: false }, ticks: { color: '#6474a5' } }
                     }
                 }
