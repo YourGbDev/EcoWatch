@@ -311,29 +311,29 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
         }
     });
 
-    // Mobile menu toggle
+    // Mobile menu toggle functions
     function toggleMobileMenu() {
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('mobile-menu-overlay');
         const mobileBtn = document.getElementById('mobile-menu-btn');
         const closeBtn = document.getElementById('close-mobile-menu');
         
-        if (sidebar.classList.contains('-translate-x-full')) {
+        if (sidebar && sidebar.classList.contains('-translate-x-full')) {
             sidebar.classList.remove('-translate-x-full');
-            overlay.classList.remove('hidden');
-            mobileBtn.classList.add('hidden');
-            closeBtn.classList.remove('hidden');
+            if (overlay) overlay.classList.remove('hidden');
+            if (mobileBtn) mobileBtn.classList.add('hidden');
+            if (closeBtn) closeBtn.classList.remove('hidden');
         } else {
             sidebar.classList.add('-translate-x-full');
-            overlay.classList.remove('hidden');
-            mobileBtn.classList.remove('hidden');
-            closeBtn.classList.add('hidden');
+            if (overlay) overlay.classList.add('hidden');
+            if (mobileBtn) mobileBtn.classList.remove('hidden');
+            if (closeBtn) closeBtn.classList.add('hidden');
         }
     }
 
     // Close mobile menu when clicking overlay
-    document.getElementById('mobile-menu-overlay').addEventListener('click', toggleMobileMenu);
-    document.getElementById('close-mobile-menu').addEventListener('click', toggleMobileMenu);
+    document.getElementById('mobile-menu-overlay')?.addEventListener('click', toggleMobileMenu);
+    document.getElementById('close-mobile-menu')?.addEventListener('click', toggleMobileMenu);
 
     // Initialize mobile menu on page load
     document.addEventListener('DOMContentLoaded', function() {
@@ -345,7 +345,8 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
             mobileBtn.addEventListener('click', toggleMobileMenu);
         }
     });
-</script>
+
+    // Location Map Initialization
 
     <!-- Location Map Initialization -->
     <script>
