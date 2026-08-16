@@ -238,35 +238,8 @@ try {
             return path && path.length > 0;
         }
 
-        // Mobile menu toggle functions
-        function toggleMobileMenu() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('mobile-menu-overlay');
-            const mobileBtn = document.getElementById('mobile-menu-btn');
-            const closeBtn = document.getElementById('close-mobile-menu');
-            
-            if (sidebar && sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.remove('-translate-x-full');
-                if (overlay) overlay.classList.remove('hidden');
-                if (mobileBtn) mobileBtn.classList.add('hidden');
-                if (closeBtn) closeBtn.classList.remove('hidden');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                if (overlay) overlay.classList.remove('hidden');
-                if (mobileBtn) mobileBtn.classList.remove('hidden');
-                if (closeBtn) closeBtn.classList.add('hidden');
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu button
-            const mobileBtn = document.getElementById('mobile-menu-btn');
-            const overlay = document.getElementById('mobile-menu-overlay');
-            const closeBtn = document.getElementById('close-mobile-menu');
-            
-            if (mobileBtn) mobileBtn.addEventListener('click', toggleMobileMenu);
-            if (overlay) overlay.addEventListener('click', toggleMobileMenu);
-            if (closeBtn) closeBtn.addEventListener('click', toggleMobileMenu);
+            lucide.createIcons();
         });
     </script>
 </body>

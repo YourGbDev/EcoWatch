@@ -62,6 +62,9 @@
 
     // Attach mobile menu handlers on page load
     document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Lucide icons (must be called to render data-lucide icons)
+        lucide.createIcons();
+        
         const mobileBtn = document.getElementById('mobile-menu-btn');
         const overlay = document.getElementById('mobile-menu-overlay');
         const closeBtn = document.getElementById('close-mobile-menu');

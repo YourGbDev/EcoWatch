@@ -311,27 +311,7 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
         }
     });
 
-    // Mobile menu toggle functions
-    function toggleMobileMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('mobile-menu-overlay');
-        const mobileBtn = document.getElementById('mobile-menu-btn');
-        const closeBtn = document.getElementById('close-mobile-menu');
-        
-        if (sidebar && sidebar.classList.contains('-translate-x-full')) {
-            sidebar.classList.remove('-translate-x-full');
-            if (overlay) overlay.classList.remove('hidden');
-            if (mobileBtn) mobileBtn.classList.add('hidden');
-            if (closeBtn) closeBtn.classList.remove('hidden');
-        } else {
-            sidebar.classList.add('-translate-x-full');
-            if (overlay) overlay.classList.add('hidden');
-            if (mobileBtn) mobileBtn.classList.remove('hidden');
-            if (closeBtn) closeBtn.classList.add('hidden');
-        }
-    }
-
-    // Initialize mobile menu on page load
+    // Initialize mobile menu on page load (sidebar.php also handles this properly)
     document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
         
@@ -343,10 +323,9 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
     });
 
     // Location Map Initialization
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const mapContainer = document.getElementById('location-map');
-            if (!mapContainer) return;
+    document.addEventListener('DOMContentLoaded', () => {
+        const mapContainer = document.getElementById('location-map');
+        if (!mapContainer) return;
 
             const ORMOC_CENTER = [11.0064, 124.6072];
             const DEFAULT_ZOOM = 13;
