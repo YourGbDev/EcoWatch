@@ -54,35 +54,10 @@ try {
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <!-- Mobile hamburger button (hidden on desktop) -->
-    <button id="mobile-menu-btn" class="md:hidden fixed top-4 left-4 z-50 bg-[#3B49DF] text-white p-3 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#3B49DF] transition-all">
-        <i data-lucide="menu" class="w-5 h-5"></i>
-    </button>
-    
-    <!-- Top bar for closing mobile menu -->
-    <button id="close-mobile-menu" class="hidden md:hidden fixed top-4 right-4 z-50 bg-white text-[#3B49DF] p-3 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#3B49DF] transition-all">
-        <i data-lucide="x" class="w-5 h-5"></i>
-    </button>
+    <?php include __DIR__ . '/includes/sidebar.php'; ?>
 
-    <!-- Mobile overlay (appears when sidebar is open) -->
-    <div id="mobile-menu-overlay" class="hidden md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40" style="display: none;"></div>
-
-    <aside id="sidebar" class="w-64 bg-[#3B49DF] p-8 text-white fixed top-0 left-0 h-screen overflow-y-auto shadow-xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0">
-        <div class="text-2xl font-bold mb-10 flex items-center gap-2">EcoWatch</div>
-        <nav class="space-y-4">
-            <a href="<?php echo BASE_URL; ?>/dashboard.php" class="nav-link active block p-3 rounded-xl transition">Dashboard</a>
-            <a href="<?php echo BASE_URL; ?>/submit_report.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Submit Report</a>
-            <a href="<?php echo BASE_URL; ?>/my_reports.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">My Reports</a>
-            <a href="<?php echo BASE_URL; ?>/profile.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Profile Settings</a>
-            <form action="<?php echo BASE_URL; ?>/api/logout.php" method="POST" class="mt-auto">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
-                <button type="submit" class="nav-link block w-full text-left p-3 rounded-xl transition hover:bg-white/10 text-red-300 hover:text-red-100">Logout</button>
-            </form>
-        </nav>
-    </aside>
-    
     <main class="flex-1 ml-4 md:ml-64 p-4 sm:p-8">
-        <header class="flex justify-between items-center mb-8 md:items-start">
+        <header class="flex justify-between items-center mb-8">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">Welcome back, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h1>
                 <p class="text-gray-500"><?php echo date("l, F j, Y"); ?></p>
