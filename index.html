@@ -25,6 +25,9 @@
         }
     </script>
     <style>
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+        }
         .glass-nav {
             background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
