@@ -58,12 +58,12 @@ INSERT INTO users (name, email, password, role) VALUES ('Maria Santos', 'demo@ec
 
 -- Seed demo reports
 INSERT INTO environmental_reports (user_id, tracking_token, category, severity, barangay, address, description, status, created_at, updated_at) VALUES
-(2, 'EW-A1B2C3', 'flooding', 'critical', 'Barangay 1', '123 Main St near Plaza', 'Flash flooding blocking main road, water level rising rapidly.', 'submitted', NOW() - INTERVAL 2 HOUR, NOW() - INTERVAL 2 HOUR),
-(2, 'EW-D4E5F6', 'illegal_dumping', 'high', 'Barangay 3', '45 Oak Avenue', 'Large pile of construction waste blocking sidewalk.', 'verified', NOW() - INTERVAL 5 HOUR, NOW() - INTERVAL 1 HOUR),
-(2, 'EW-G7H8I9', 'clogged_drainage', 'high', 'Barangay 2', '78 Pine Street', 'Drainage blocked by plastic waste, water pooling on road.', 'assigned', NOW() - INTERVAL 8 HOUR, NOW() - INTERVAL 3 HOUR),
-(2, 'EW-J0K1L2', 'uncollected_garbage', 'low', 'Barangay 4', '12 Maple Road', 'Garbage not collected for 3 days, bags piling up.', 'responding', NOW() - INTERVAL 12 HOUR, NOW() - INTERVAL 4 HOUR),
-(2, 'EW-M3N4O5', 'flooding', 'low', 'Barangay 5', '56 Cedar Lane', 'Minor flooding in low-lying area after heavy rain.', 'resolved', NOW() - INTERVAL 24 HOUR, NOW() - INTERVAL 6 HOUR),
-(2, 'EW-P6Q7R8', 'drug_concern', 'high', 'Barangay 2', '34 Elm Street', 'Suspected drug activity near community park, anonymous report.', 'submitted', NOW() - INTERVAL 3 HOUR, NOW() - INTERVAL 3 HOUR);
+(2, 'EW-A1B2C3', 'flooding', 'critical', 'Tambulilid', '123 Main St near Plaza', 'Flash flooding blocking main road, water level rising rapidly.', 'submitted', NOW() - INTERVAL 2 HOUR, NOW() - INTERVAL 2 HOUR),
+(2, 'EW-D4E5F6', 'illegal_dumping', 'high', 'Biliboy', '45 Oak Avenue', 'Large pile of construction waste blocking sidewalk.', 'verified', NOW() - INTERVAL 5 HOUR, NOW() - INTERVAL 1 HOUR),
+(2, 'EW-G7H8I9', 'clogged_drainage', 'high', 'Dolores', '78 Pine Street', 'Drainage blocked by plastic waste, water pooling on road.', 'assigned', NOW() - INTERVAL 8 HOUR, NOW() - INTERVAL 3 HOUR),
+(2, 'EW-J0K1L2', 'uncollected_garbage', 'low', 'Curva', '12 Maple Road', 'Garbage not collected for 3 days, bags piling up.', 'responding', NOW() - INTERVAL 12 HOUR, NOW() - INTERVAL 4 HOUR),
+(2, 'EW-M3N4O5', 'flooding', 'low', 'Tongonan', '56 Cedar Lane', 'Minor flooding in low-lying area after heavy rain.', 'resolved', NOW() - INTERVAL 24 HOUR, NOW() - INTERVAL 6 HOUR),
+(2, 'EW-P6Q7R8', 'drug_concern', 'high', 'Labrador', '34 Elm Street', 'Suspected drug activity near community park, anonymous report.', 'submitted', NOW() - INTERVAL 3 HOUR, NOW() - INTERVAL 3 HOUR);
 
 -- Seed status history
 INSERT INTO report_status_history (report_id, old_status, new_status, changed_by, notes, created_at) VALUES
@@ -71,7 +71,7 @@ INSERT INTO report_status_history (report_id, old_status, new_status, changed_by
 (2, NULL, 'submitted', 2, 'Photo evidence uploaded', NOW() - INTERVAL 5 HOUR),
 (2, 'submitted', 'verified', 1, 'Verified via satellite imagery', NOW() - INTERVAL 1 HOUR),
 (3, NULL, 'submitted', 2, NULL, NOW() - INTERVAL 8 HOUR),
-(3, 'submitted', 'assigned', 1, 'Assigned to Barangay 2 clean-up crew', NOW() - INTERVAL 3 HOUR),
+(3, 'submitted', 'assigned', 1, 'Assigned to Dolores clean-up crew', NOW() - INTERVAL 3 HOUR),
 (4, NULL, 'submitted', 2, NULL, NOW() - INTERVAL 12 HOUR),
 (4, 'submitted', 'responding', 1, 'Dispatch team en route', NOW() - INTERVAL 4 HOUR),
 (5, NULL, 'submitted', 2, NULL, NOW() - INTERVAL 24 HOUR),

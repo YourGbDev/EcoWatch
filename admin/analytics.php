@@ -236,7 +236,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#6474a5' } },
+                        x: { grid: { display: false }, ticks: { color: '#6474a5', stepSize: 1, precision: 0 } },
                         y: { grid: { display: false }, ticks: { color: '#6474a5' } }
                     }
                 }
@@ -287,7 +287,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#6474a5' } },
+                        x: { grid: { display: false }, ticks: { color: '#6474a5', stepSize: 1, precision: 0 } },
                         y: { grid: { display: false }, ticks: { color: '#6474a5' } }
                     }
                 }
@@ -325,7 +325,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
                     plugins: { legend: { display: false } },
                     scales: {
                         x: { grid: { display: false }, ticks: { color: '#6474a5', maxRotation: 90, minRotation: 90 } },
-                        y: { grid: { display: false }, ticks: { color: '#6474a5' }, beginAtZero: true }
+                        y: { grid: { display: false }, ticks: { color: '#6474a5', stepSize: 1, precision: 0 }, beginAtZero: true }
                     }
                 }
             });
