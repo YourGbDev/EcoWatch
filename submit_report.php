@@ -22,7 +22,7 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
 <body class="bg-gray-50 min-h-screen">
     <?php include __DIR__ . '/includes/sidebar.php'; ?>
 
-    <main class="flex-1 ml-4 md:ml-64 p-4 sm:p-8">
+    <main class="flex-1 ml-4 pt-16 md:ml-64 md:pt-8 p-4 sm:p-8">
 
         <header class="flex justify-between items-center mb-8">
             <div>

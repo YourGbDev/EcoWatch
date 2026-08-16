@@ -34,7 +34,7 @@ try {
 <body class="bg-gray-50 min-h-screen">
     <?php include __DIR__ . '/includes/sidebar.php'; ?>
 
-    <main class="flex-1 ml-4 md:ml-64 p-4 sm:p-8">
+    <main class="flex-1 ml-4 pt-16 md:ml-64 md:pt-8 p-4 sm:p-8">
 
         <h1 class="text-3xl font-bold mb-2">Profile Settings</h1>
         <p class="text-gray-500 mb-8">Manage your account information and security.</p>
