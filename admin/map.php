@@ -17,6 +17,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script>
         tailwind.config = {
@@ -83,15 +84,31 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
             </button>
         </div>
 
-        <!-- Severity Filter Buttons -->
+        <!-- View Toggle & Severity Filter Buttons -->
         <div class="bg-white border border-slate-200 rounded-2xl p-4 mb-6 shadow-sm">
-            <div class="flex flex-wrap gap-3">
-                <button class="filter-btn active" data-severity="all">All</button>
-                <button class="filter-btn" data-severity="low">Low</button>
-                <button class="filter-btn" data-severity="high">High</button>
-                <button class="filter-btn" data-severity="critical">Critical</button>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+                <!-- View Toggle -->
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-semibold text-slate-700">View:</span>
+                    <div class="flex bg-white border border-slate-200 rounded-xl p-1" role="radiogroup" aria-label="Map view">
+                        <button id="view-markers" type="button" class="view-btn active px-4 py-2 text-sm font-semibold rounded-lg text-white bg-[#3B49DF] transition-colors" role="radio" aria-checked="true">
+                            <i data-lucide="map-pin" class="w-4 h-4 inline-block mr-1"></i> Markers
+                        </button>
+                        <button id="view-heatmap" type="button" class="view-btn px-4 py-2 text-sm font-semibold rounded-lg text-slate-500 hover:text-slate-700 transition-colors" role="radio" aria-checked="false">
+                            <i data-lucide="flame" class="w-4 h-4 inline-block mr-1"></i> Heatmap
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Severity Filter Buttons -->
+                <div id="severity-filters" class="flex flex-wrap gap-3">
+                    <button class="filter-btn active" data-severity="all">All</button>
+                    <button class="filter-btn" data-severity="low">Low</button>
+                    <button class="filter-btn" data-severity="high">High</button>
+                    <button class="filter-btn" data-severity="critical">Critical</button>
+                </div>
             </div>
-            <p class="text-sm text-slate-500 mt-2" id="filter-count">Loading...</p>
+            <p class="text-sm text-slate-500" id="filter-count">Loading...</p>
         </div>
 
         <!-- Map Container -->
@@ -133,6 +150,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
         let markersLayer = null;
         let allReports = [];
         let currentFilter = 'all';
+        let currentView = 'markers';
 
         // Marker icons by severity
         const severityIcons = {
@@ -171,6 +189,37 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
             }).addTo(map);
 
             markersLayer = L.layerGroup().addTo(map);
+            heatmapLayer = null;
+        }
+
+        // Heatmap helper functions
+        const severityWeight = { critical: 3, high: 2, low: 1 };
+
+        function buildHeatmapData(reports) {
+            return reports
+                .filter(r => r.latitude !== null && r.longitude !== null)
+                .map(r => [r.latitude, r.longitude, severityWeight[r.severity] || 1]);
+        }
+
+        function renderHeatmap(reports) {
+            const heatData = buildHeatmapData(reports);
+
+            if (heatmapLayer) {
+                map.removeLayer(heatmapLayer);
+            }
+
+            heatmapLayer = L.heatLayer(heatData, {
+                radius: 35,
+                blur: 25,
+                maxZoom: 17,
+                gradient: {
+                    0.2: '#10B981',   // green (low)
+                    0.5: '#F59E0B',   // orange (high)
+                    0.8: '#EF4444'    // red (critical)
+                }
+            }).addTo(map);
+
+            document.getElementById('filter-count').textContent = `${heatData.length} incident(s) in heatmap`;
         }
 
         function severityLabel(severity) {
@@ -226,7 +275,11 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
                 filtered = allReports.filter(r => r.severity === filter);
             }
 
-            renderMarkers(filtered);
+            if (currentView === 'markers') {
+                renderMarkers(filtered);
+            } else {
+                renderHeatmap(filtered);
+            }
 
             // Update active button
             document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -269,6 +322,57 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
             }
         }
 
+        function setView(view) {
+            currentView = view;
+
+            if (view === 'markers') {
+                // Show markers, hide heatmap
+                if (heatmapLayer) {
+                    map.removeLayer(heatmapLayer);
+                    heatmapLayer = null;
+                }
+                if (!map.hasLayer(markersLayer)) {
+                    map.addLayer(markersLayer);
+                }
+
+                // Show severity filters
+                document.getElementById('severity-filters').classList.remove('hidden');
+                document.getElementById('severity-filters').classList.add('flex');
+
+                // Update view toggle buttons
+                document.getElementById('view-markers').classList.add('active', 'bg-[#3B49DF]', 'text-white');
+                document.getElementById('view-markers').classList.remove('text-slate-500');
+                document.getElementById('view-markers').setAttribute('aria-checked', 'true');
+                document.getElementById('view-heatmap').classList.remove('active', 'bg-[#3B49DF]', 'text-white');
+                document.getElementById('view-heatmap').classList.add('text-slate-500');
+                document.getElementById('view-heatmap').setAttribute('aria-checked', 'false');
+
+                // Re-apply current filter
+                applyFilter(currentFilter);
+            } else {
+                // Show heatmap, hide markers
+                markersLayer.clearLayers();
+                if (map.hasLayer(markersLayer)) {
+                    map.removeLayer(markersLayer);
+                }
+
+                // Hide severity filters
+                document.getElementById('severity-filters').classList.add('hidden');
+                document.getElementById('severity-filters').classList.remove('flex');
+
+                // Update view toggle buttons
+                document.getElementById('view-heatmap').classList.add('active', 'bg-[#3B49DF]', 'text-white');
+                document.getElementById('view-heatmap').classList.remove('text-slate-500');
+                document.getElementById('view-heatmap').setAttribute('aria-checked', 'true');
+                document.getElementById('view-markers').classList.remove('active', 'bg-[#3B49DF]', 'text-white');
+                document.getElementById('view-markers').classList.add('text-slate-500');
+                document.getElementById('view-markers').setAttribute('aria-checked', 'false');
+
+                // Render heatmap with all reports (no severity filtering in heatmap view)
+                renderHeatmap(allReports);
+            }
+        }
+
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
             initMap();
@@ -278,6 +382,10 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => applyFilter(btn.dataset.severity));
             });
+
+            // View toggle handlers
+            document.getElementById('view-markers').addEventListener('click', () => setView('markers'));
+            document.getElementById('view-heatmap').addEventListener('click', () => setView('heatmap'));
         });
     </script>
 </body>
