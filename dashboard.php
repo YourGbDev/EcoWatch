@@ -67,7 +67,7 @@ try {
     <!-- Mobile overlay (appears when sidebar is open) -->
     <div id="mobile-menu-overlay" class="hidden md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40" style="display: none;"></div>
 
-    <aside id="sidebar" class="w-64 bg-[#3B49DF] p-8 text-white fixed top-0 left-0 h-screen overflow-y-auto shadow-xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0">
+    <aside id="sidebar" class="w-64 bg-[#3B49DF] p-8 text-white fixed top-0 left-0 h-screen overflow-y-auto shadow-xl z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
         <div class="text-2xl font-bold mb-10 flex items-center gap-2">EcoWatch</div>
         <nav class="space-y-4">
             <a href="<?php echo BASE_URL; ?>/dashboard.php" class="nav-link active block p-3 rounded-xl transition">Dashboard</a>
@@ -81,8 +81,8 @@ try {
         </nav>
     </aside>
     
-    <main class="flex-1 ml-64 p-4 sm:p-8">
-        <header class="flex justify-between items-center mb-8">
+    <main class="flex-1 ml-4 md:ml-64 p-4 sm:p-8">
+        <header class="flex justify-between items-center mb-8 md:items-start">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">Welcome back, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h1>
                 <p class="text-gray-500"><?php echo date("l, F j, Y"); ?></p>
@@ -92,7 +92,7 @@ try {
             </div>
         </header>
 
-        <section class="grid grid-cols-4 gap-6 mb-8">
+        <section class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
             <?php foreach($stats as $label => $info): ?>
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
                     <h3 class="text-sm text-gray-500 font-medium"><?php echo $label; ?></h3>

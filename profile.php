@@ -43,7 +43,7 @@ try {
     <!-- Mobile overlay (appears when sidebar is open) -->
     <div id="mobile-menu-overlay" class="hidden md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40" style="display: none;"></div>
 
-    <aside id="sidebar" class="w-64 bg-[#3B49DF] p-8 text-white fixed top-0 left-0 h-screen overflow-y-auto shadow-xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0">
+    <aside id="sidebar" class="w-64 bg-[#3B49DF] p-8 text-white fixed top-0 left-0 h-screen overflow-y-auto shadow-xl z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
         <div class="text-2xl font-bold mb-10 flex items-center gap-2">EcoWatch</div>
         <nav class="space-y-4">
             <a href="<?php echo BASE_URL; ?>/dashboard.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Dashboard</a>
@@ -57,7 +57,7 @@ try {
         </nav>
     </aside>
 
-    <main class="flex-1 ml-64 p-4 sm:p-8">
+    <main class="flex-1 ml-4 md:ml-64 p-4 sm:p-8">
         <h1 class="text-3xl font-bold mb-2">Profile Settings</h1>
         <p class="text-gray-500 mb-8">Manage your account information and security.</p>
 

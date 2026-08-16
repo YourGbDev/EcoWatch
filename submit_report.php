@@ -46,7 +46,7 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
         </nav>
     </aside>
 
-    <main class="flex-1 ml-64 p-4 sm:p-8">
+    <main class="flex-1 ml-4 md:ml-64 p-4 sm:p-8">
         <header class="flex justify-between items-center mb-8">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">Submit New Report</h1>
@@ -57,18 +57,18 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
             </div>
         </header>
 
-        <form id="submit-report-form" class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 transition-all duration-300 space-y-6">
+        <form id="submit-report-form" class="w-full max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100 transition-all duration-300 space-y-6">
             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             <input type="hidden" name="category" id="category-input" required>
 
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-4">Select Issue Category</label>
-                <div class="grid grid-cols-2 gap-4">
-                    <button type="button" onclick="selectCategory(this, 'flooding')" class="btn-cat btn-flood p-4 rounded-2xl font-semibold border-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]">Stagnant Water</button>
-                    <button type="button" onclick="selectCategory(this, 'illegal_dumping')" class="btn-cat btn-dumping p-4 rounded-2xl font-semibold border-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]">Illegal Dumping</button>
-                    <button type="button" onclick="selectCategory(this, 'clogged_drainage')" class="btn-cat btn-drainage p-4 rounded-2xl font-semibold border-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]">Drainage</button>
-                    <button type="button" onclick="selectCategory(this, 'uncollected_garbage')" class="btn-cat btn-waste p-4 rounded-2xl font-semibold border-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]">Waste</button>
-                    <button type="button" onclick="selectCategory(this, 'drug_concern')" class="btn-cat btn-drug p-4 rounded-2xl font-semibold border-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]">Drug Concern</button>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <button type="button" onclick="selectCategory(this, 'flooding')" class="btn-cat btn-flood w-full p-4 rounded-2xl font-semibold border-2 text-left transition-all duration-300">Stagnant Water</button>
+                    <button type="button" onclick="selectCategory(this, 'illegal_dumping')" class="btn-cat btn-dumping w-full p-4 rounded-2xl font-semibold border-2 text-left transition-all duration-300">Illegal Dumping</button>
+                    <button type="button" onclick="selectCategory(this, 'clogged_drainage')" class="btn-cat btn-drainage w-full p-4 rounded-2xl font-semibold border-2 text-left transition-all duration-300">Drainage</button>
+                    <button type="button" onclick="selectCategory(this, 'uncollected_garbage')" class="btn-cat btn-waste w-full p-4 rounded-2xl font-semibold border-2 text-left transition-all duration-300">Waste</button>
+                    <button type="button" onclick="selectCategory(this, 'drug_concern')" class="btn-cat btn-drug w-full p-4 rounded-2xl font-semibold border-2 text-left transition-all duration-300">Drug Concern</button>
                 </div>
                 <p id="category-error" class="text-red-500 text-sm mt-2 hidden">Please select an issue category.</p>
             </div>
