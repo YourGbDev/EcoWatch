@@ -97,6 +97,8 @@ try {
     $barangay    = trim($data['barangay'] ?? '');
     $address    = trim($data['address']);
     $description = isset($data['description']) ? trim($data['description']) : null;
+    $latitude   = isset($data['latitude']) && $data['latitude'] !== '' ? (float)$data['latitude'] : null;
+    $longitude  = isset($data['longitude']) && $data['longitude'] !== '' ? (float)$data['longitude'] : null;
 
     $allowedCategories = ['flooding', 'illegal_dumping', 'clogged_drainage', 'uncollected_garbage', 'drug_concern'];
     if (!in_array($category, $allowedCategories, true)) {
@@ -144,8 +146,8 @@ try {
     $pdo->beginTransaction();
 
     $sql = "INSERT INTO environmental_reports 
-            (category, severity, barangay, address, description, status, tracking_token, user_id, photo_path) 
-            VALUES (:category, :severity, :barangay, :address, :description, 'submitted', :tracking_token, :user_id, :photo_path)";
+            (category, severity, barangay, address, description, status, tracking_token, user_id, photo_path, latitude, longitude) 
+            VALUES (:category, :severity, :barangay, :address, :description, 'submitted', :tracking_token, :user_id, :photo_path, :latitude, :longitude)";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
@@ -156,7 +158,9 @@ try {
         ':description'    => $description,
         ':tracking_token' => $trackingToken,
         ':user_id'        => $userId,
-        ':photo_path'     => $photoPath
+        ':photo_path'     => $photoPath,
+        ':latitude'       => $latitude,
+        ':longitude'      => $longitude
     ]);
 
     $reportId = (int)$pdo->lastInsertId();

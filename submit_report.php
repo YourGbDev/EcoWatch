@@ -7,8 +7,11 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <title>Submit Report | EcoWatch</title>
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -187,7 +190,23 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
                     <option value="Tongonan">Tongonan</option>
                     <option value="Valencia">Valencia</option>
                 </select>
-                <input type="text" name="address" placeholder="Exact Location / Address" required class="w-full p-4 bg-gray-50 rounded-2xl border border-transparent focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all duration-300">
+                <input type="text" name="address" placeholder="Exact Location / Address" required class="w-full p-4 bg-gray-50 rounded-2xl border border-transparent focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all duration-300" id="address-input">
+
+                <!-- Optional Location Map -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <label class="block text-sm font-bold text-gray-700">Exact Location (Optional)</label>
+                        <span class="text-xs text-slate-500">Drag the pin to mark the exact location</span>
+                    </div>
+                    <div id="location-map" class="w-full h-64 rounded-xl border border-slate-200" style="z-index: 1;"></div>
+                    <div class="mt-3 flex flex-wrap gap-4 text-sm text-slate-600">
+                        <div>Latitude: <span id="lat-display" class="font-mono text-brand-blue">Not set</span></div>
+                        <div>Longitude: <span id="lng-display" class="font-mono text-brand-blue">Not set</span></div>
+                    </div>
+                    <input type="hidden" name="latitude" id="latitude-input">
+                    <input type="hidden" name="longitude" id="longitude-input">
+                </div>
+
                 <textarea name="description" rows="4" placeholder="Describe the issue..." class="w-full p-4 bg-gray-50 rounded-2xl border border-transparent focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all duration-300"></textarea>
 
                 <div>
@@ -303,6 +322,98 @@ $csrf_token = htmlspecialchars(generate_csrf_token());
         }
     });
 </script>
+
+    <!-- Location Map Initialization -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapContainer = document.getElementById('location-map');
+            if (!mapContainer) return;
+
+            const ORMOC_CENTER = [11.0064, 124.6072];
+            const DEFAULT_ZOOM = 13;
+
+            let map = L.map('location-map', {
+                center: ORMOC_CENTER,
+                zoom: 13,
+                zoomControl: true,
+                attributionControl: false
+            });
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            let marker = null;
+
+            const latInput = document.getElementById('latitude-input');
+            const lngInput = document.getElementById('longitude-input');
+            const latDisplay = document.getElementById('lat-display');
+            const lngDisplay = document.getElementById('lng-display');
+
+            function updateMarker(lat, lng) {
+                if (marker) {
+                    marker.setLatLng([lat, lng]);
+                } else {
+                    marker = L.marker([lat, lng], {
+                        draggable: true,
+                        icon: L.divIcon({
+                            className: 'custom-marker',
+                            html: '<div style="background:#3B49DF;border:3px solid white;border-radius:50%;width:28px;height:28px;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>',
+                            iconSize: [28, 28],
+                            iconAnchor: [14, 14]
+                        })
+                    }).addTo(map);
+                }
+
+                latInput.value = lat.toFixed(6);
+                lngInput.value = lng.toFixed(6);
+                document.getElementById('lat-display').textContent = lat.toFixed(6);
+                document.getElementById('lng-display').textContent = lng.toFixed(6);
+                map.panTo([lat, lng]);
+            }
+
+            // Click on map to place/drag marker
+            map.on('click', function(e) {
+                updateMarker(e.latlng.lat, e.latlng.lng);
+            });
+
+            // Also allow dragging the marker
+            map.on('dragend', function() {
+                if (marker) {
+                    const pos = marker.getLatLng();
+                    updateMarker(pos.lat, pos.lng);
+                }
+            });
+
+            // Optional: geocode address when user types (basic)
+            const addressInput = document.getElementById('address-input');
+            if (addressInput) {
+                let geocodeTimeout;
+                addressInput.addEventListener('input', () => {
+                    clearTimeout(geocodeTimeout);
+                    geocodeTimeout = setTimeout(() => {
+                        const query = addressInput.value.trim();
+                        if (query.length > 5) {
+                            // Use Nominatim for simple geocoding (free, no key needed)
+                            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Ormoc City, Leyte, Philippines')}&limit=1`)
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.length > 0) {
+                                        const lat = parseFloat(data[0].lat);
+                                        const lng = parseFloat(data[0].lon);
+                                        if (!isNaN(lat) && !isNaN(lng)) {
+                                            updateMarker(lat, lng);
+                                        }
+                                    }
+                                })
+                                .catch(err => console.warn('Geocoding failed:', err));
+                        }
+                    }, 800);
+                });
+            }
+        });
+    </script>
 </main>
 </body>
 </html>

@@ -59,6 +59,7 @@ try {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-2">
             <a href="<?php echo BASE_URL; ?>/admin/index.php" class="px-4 py-3 text-sm font-semibold rounded-t-xl border-b-2 border-[#3B49DF] text-[#3B49DF] transition">Incident Queue</a>
             <a href="<?php echo BASE_URL; ?>/admin/analytics.php" class="px-4 py-3 text-sm font-semibold rounded-t-xl border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 transition">Analytics</a>
+            <a href="<?php echo BASE_URL; ?>/admin/map.php" class="px-4 py-3 text-sm font-semibold rounded-t-xl border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 transition">Map</a>
         </div>
     </nav>
 

@@ -25,6 +25,8 @@ CREATE TABLE environmental_reports (
     description TEXT,
     status VARCHAR(20) DEFAULT 'submitted',
     photo_path VARCHAR(255),
+    latitude FLOAT NULL,
+    longitude FLOAT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
@@ -56,14 +58,14 @@ INSERT INTO users (name, email, password, role) VALUES ('System Administrator', 
 -- Seed demo citizen user: demo@ecowatch.gov / demo1234
 INSERT INTO users (name, email, password, role) VALUES ('Maria Santos', 'demo@ecowatch.gov', '$2y$10$DRPjc25.M.drRnVVV6Kf9eTS/PIHmayqFM0zUUfCEbAHLKcZpH4ci', 'user');
 
--- Seed demo reports
-INSERT INTO environmental_reports (user_id, tracking_token, category, severity, barangay, address, description, status, created_at, updated_at) VALUES
-(2, 'EW-A1B2C3', 'flooding', 'critical', 'Tambulilid', '123 Main St near Plaza', 'Flash flooding blocking main road, water level rising rapidly.', 'submitted', NOW() - INTERVAL 2 HOUR, NOW() - INTERVAL 2 HOUR),
-(2, 'EW-D4E5F6', 'illegal_dumping', 'high', 'Biliboy', '45 Oak Avenue', 'Large pile of construction waste blocking sidewalk.', 'verified', NOW() - INTERVAL 5 HOUR, NOW() - INTERVAL 1 HOUR),
-(2, 'EW-G7H8I9', 'clogged_drainage', 'high', 'Dolores', '78 Pine Street', 'Drainage blocked by plastic waste, water pooling on road.', 'assigned', NOW() - INTERVAL 8 HOUR, NOW() - INTERVAL 3 HOUR),
-(2, 'EW-J0K1L2', 'uncollected_garbage', 'low', 'Curva', '12 Maple Road', 'Garbage not collected for 3 days, bags piling up.', 'responding', NOW() - INTERVAL 12 HOUR, NOW() - INTERVAL 4 HOUR),
-(2, 'EW-M3N4O5', 'flooding', 'low', 'Tongonan', '56 Cedar Lane', 'Minor flooding in low-lying area after heavy rain.', 'resolved', NOW() - INTERVAL 24 HOUR, NOW() - INTERVAL 6 HOUR),
-(2, 'EW-P6Q7R8', 'drug_concern', 'high', 'Labrador', '34 Elm Street', 'Suspected drug activity near community park, anonymous report.', 'submitted', NOW() - INTERVAL 3 HOUR, NOW() - INTERVAL 3 HOUR);
+-- Seed demo reports (with sample lat/lng for Ormoc City area)
+INSERT INTO environmental_reports (user_id, tracking_token, category, severity, barangay, address, description, status, latitude, longitude, created_at, updated_at) VALUES
+(2, 'EW-A1B2C3', 'flooding', 'critical', 'Tambulilid', '123 Main St near Plaza', 'Flash flooding blocking main road, water level rising rapidly.', 'submitted', 11.0064, 124.6072, NOW() - INTERVAL 2 HOUR, NOW() - INTERVAL 2 HOUR),
+(2, 'EW-D4E5F6', 'illegal_dumping', 'high', 'Biliboy', '45 Oak Avenue', 'Large pile of construction waste blocking sidewalk.', 'verified', 11.0150, 124.6150, NOW() - INTERVAL 5 HOUR, NOW() - INTERVAL 1 HOUR),
+(2, 'EW-G7H8I9', 'clogged_drainage', 'high', 'Dolores', '78 Pine Street', 'Drainage blocked by plastic waste, water pooling on road.', 'assigned', 11.0200, 124.6200, NOW() - INTERVAL 8 HOUR, NOW() - INTERVAL 3 HOUR),
+(2, 'EW-J0K1L2', 'uncollected_garbage', 'low', 'Curva', '12 Maple Road', 'Garbage not collected for 3 days, bags piling up.', 'responding', 10.9900, 124.5900, NOW() - INTERVAL 12 HOUR, NOW() - INTERVAL 4 HOUR),
+(2, 'EW-M3N4O5', 'flooding', 'low', 'Tongonan', '56 Cedar Lane', 'Minor flooding in low-lying area after heavy rain.', 'resolved', 11.0300, 124.6300, NOW() - INTERVAL 24 HOUR, NOW() - INTERVAL 6 HOUR),
+(2, 'EW-P6Q7R8', 'drug_concern', 'high', 'Labrador', '34 Elm Street', 'Suspected drug activity near community park, anonymous report.', 'submitted', 10.9800, 124.5800, NOW() - INTERVAL 3 HOUR, NOW() - INTERVAL 3 HOUR);
 
 -- Seed status history
 INSERT INTO report_status_history (report_id, old_status, new_status, changed_by, notes, created_at) VALUES
