@@ -31,7 +31,7 @@ try {
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- Mobile hamburger button (hidden on desktop) -->
-    <button id="mobile-menu-btn" class="hidden md:hidden fixed top-4 left-4 z-50 bg-[#3B49DF] text-white p-3 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#3B49DF] transition-all">
+    <button id="mobile-menu-btn" class="md:hidden fixed top-4 left-4 z-50 bg-[#3B49DF] text-white p-3 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#3B49DF] transition-all">
         <i data-lucide="menu" class="w-5 h-5"></i>
     </button>
     
@@ -43,7 +43,7 @@ try {
     <!-- Mobile overlay (appears when sidebar is open) -->
     <div id="mobile-menu-overlay" class="hidden md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40" style="display: none;"></div>
 
-    <aside id="sidebar" class="w-64 bg-[#3B49DF] p-8 text-white fixed top-0 left-0 h-screen overflow-y-auto shadow-xl z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+    <aside id="sidebar" class="w-64 bg-[#3B49DF] p-8 text-white fixed top-0 left-0 h-screen overflow-y-auto shadow-xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0">
         <div class="text-2xl font-bold mb-10 flex items-center gap-2">EcoWatch</div>
         <nav class="space-y-4">
             <a href="<?php echo BASE_URL; ?>/dashboard.php" class="nav-link block p-3 hover:bg-white/10 rounded-xl transition">Dashboard</a>
