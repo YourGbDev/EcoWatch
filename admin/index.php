@@ -54,6 +54,14 @@ try {
         </div>
     </header>
 
+    <!-- Admin navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-20 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-2">
+            <a href="<?php echo BASE_URL; ?>/admin/index.php" class="px-4 py-3 text-sm font-semibold rounded-t-xl border-b-2 border-[#3B49DF] text-[#3B49DF] transition">Incident Queue</a>
+            <a href="<?php echo BASE_URL; ?>/admin/analytics.php" class="px-4 py-3 text-sm font-semibold rounded-t-xl border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 transition">Analytics</a>
+        </div>
+    </nav>
+
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
